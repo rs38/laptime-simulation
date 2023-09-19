@@ -48,7 +48,7 @@ def main(track_pars: dict,
             line = fh.readline()
 
     # check dependencies
-    pkg_resources.require(dependencies)
+    # pkg_resources.require(dependencies)
 
     # ------------------------------------------------------------------------------------------------------------------
     # CHECK USER INPUT -------------------------------------------------------------------------------------------------
@@ -147,13 +147,14 @@ def main(track_pars: dict,
     # ------------------------------------------------------------------------------------------------------------------
 
     # use spline approximation to prepare centerline input
-    track_interp = tph.spline_approximation.\
-        spline_approximation(track=track_imp,
-                             stepsize_prep=stepsize_opts["stepsize_prep"],
-                             stepsize_reg=stepsize_opts["stepsize_reg"],
-                             k_reg=reg_smooth_opts["k_reg"],
-                             s_reg=reg_smooth_opts["s_reg"],
-                             debug=True)
+    # track_interp = tph.spline_approximation.spline_approximation(track=track_imp,
+    #                          stepsize_prep=stepsize_opts["stepsize_prep"],
+    #                          stepsize_reg=stepsize_opts["stepsize_reg"],
+    #                          k_reg=reg_smooth_opts["k_reg"],
+    #                          s_reg=reg_smooth_opts["s_reg"],
+    #                          debug=True)
+
+    track_interp = track_imp
 
     # check if imported track should be flipped, i.e. reverse direction
     if imp_opts["flip_imp_track"]:
@@ -312,9 +313,9 @@ if __name__ == '__main__':
 
     # F1 ---------------------------------------------------------------------------------------------------------------
 
-    track_pars_ = {"location": "Austin",
-                   "track_length": 5513.0,
-                   "track_width": None}
+    #track_pars_ = {"location": "Austin",
+     #              "track_length": 5513.0,
+      #             "track_width": None}
 
     # track_pars_ = {"location": "Budapest",
     #                "track_length": 4381.0,
@@ -331,6 +332,10 @@ if __name__ == '__main__':
     # track_pars_ = {"location": "Melbourne",
     #                "track_length": 5303.0,
     #                "track_width": None}
+    
+    track_pars_ = {"location": "test",
+                   "track_length": 400.0,
+                   "track_width": 10.0}
 
     # track_pars_ = {"location": "IMS",
     #                "track_length": 4023.0,
@@ -403,8 +408,8 @@ if __name__ == '__main__':
     #                "track_width": None}
 
     # track_pars_ = {"location": "Nuerburgring",
-    #                "track_length": 5148.0,
-    #                "track_width": None}
+    #                 "track_length": 5148.0,
+    #                 "track_width": 10.0}
 
     # track_pars_ = {"location": "Oschersleben",
     #                "track_length": 3696.0,
