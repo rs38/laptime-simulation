@@ -35,7 +35,7 @@ class CarElectric(Car):
         if not parser.read(parfilepath):
             raise RuntimeError('Specified config file does not exist or is empty!')
 
-        # remove comments
+        # remove comments from JSON
         pars_veh_str = re.sub(r'(?<!\\)#.*', '', parser.get('VEH_PARS', 'veh_pars'))
         pars_veh_tmp = json.loads(pars_veh_str)
 

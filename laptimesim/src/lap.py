@@ -33,6 +33,7 @@ class Lap(object):
                  "__m_eng",
                  "__m_e_motor",
                  "__m_requ",
+                 "__power",
                  "__es_cl",
                  "__gear_cl",
                  "__e_rec_e_motor",
@@ -72,6 +73,7 @@ class Lap(object):
         self.m_eng = np.zeros(trackobj.no_points)       # [Nm] used engine torque during current step, positive values
         self.m_e_motor = np.zeros(trackobj.no_points)   # [Nm] used e motor torque during current step, positive values
         self.m_requ = np.zeros(trackobj.no_points)      # [Nm] requested torque during current step, positive values
+        self.power = np.zeros(trackobj.no_points)       # [W] power of the hybrid system during current step
         self.es_cl = np.zeros(trackobj.no_points_cl)    # [J] energy storage state at the beginning of a step
         self.gear_cl = np.zeros(trackobj.no_points_cl, dtype=int)  # [-] gear during current step, zero based in solver
         # [kJ] energy recuperated during the current step available at the beginning of next step
@@ -124,6 +126,11 @@ class Lap(object):
     def __get_m_requ(self) -> np.ndarray: return self.__m_requ
     def __set_m_requ(self, x: np.ndarray) -> None: self.__m_requ = x
     m_requ = property(__get_m_requ, __set_m_requ)
+
+
+    def __get_power(self) -> np.ndarray: return self.__power
+    def __set_power(self, x: np.ndarray) -> None: self.__power = x
+    power = property(__get_power, __set_power)
 
     def __get_es_cl(self) -> np.ndarray: return self.__es_cl
     def __set_es_cl(self, x: np.ndarray) -> None: self.__es_cl = x
@@ -184,6 +191,7 @@ class Lap(object):
         self.m_eng = np.zeros(self.trackobj.no_points)
         self.m_e_motor = np.zeros(self.trackobj.no_points)
         self.m_requ = np.zeros(self.trackobj.no_points)
+        self.power = np.zeros(self.trackobj.no_points)
         self.es_cl = np.zeros(self.trackobj.no_points_cl)
         self.gear_cl = np.zeros(self.trackobj.no_points_cl, dtype=int)
         self.e_rec_e_motor = np.zeros(self.trackobj.no_points)
@@ -492,6 +500,7 @@ class Lap(object):
                                   * (self.t_cl[i + 1] - self.t_cl[i]))
 
                 # calculate changes in the hybrid energy storage [J]
+                self.power[i] =  (e_rec_etc - e_cons_e_motor) /  (self.t_cl[i + 1] - self.t_cl[i])
                 self.es_cl[i + 1] = self.es_cl[i] + e_rec_etc - e_cons_e_motor
 
                 if not self.driverobj.carobj.powertrain_type == "electric" and self.es_cl[i + 1] < 0.0:
@@ -688,6 +697,8 @@ class Lap(object):
 
                         # energy recuperation by e motor in [J] under the assumption of e motor being able to recuperate
                         # all kinetic energy remaining after subtraction of the resistances
+                        # TODO: add recuperation maximum
+
                         if np.sum(self.e_rec_e_motor) < self.e_rec_e_motor_max \
                                 and self.driverobj.pars_driver["use_recuperation"]:
                             self.e_rec_e_motor[k] = (self.driverobj.carobj.pars_engine["eta_e_motor_re"]
@@ -721,7 +732,7 @@ class Lap(object):
         if self.pars_solver["series"] == "F1":
             a_y_valid = 50.0
         else:
-            a_y_valid = 30.0
+            a_y_valid = 12.0
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -737,14 +748,23 @@ class Lap(object):
     def plot_torques(self):
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        plt.plot(self.trackobj.dists_cl[:-1], self.m_eng)
+        #plt.plot(self.trackobj.dists_cl[:-1], self.m_eng)
         plt.plot(self.trackobj.dists_cl[:-1], self.m_e_motor)
         plt.plot(self.trackobj.dists_cl[:-1], self.m_eng + self.m_e_motor)
         plt.plot(self.trackobj.dists_cl[:-1], self.m_requ)
-        ax.set_title("Provided and requested (i.e. transmittable by the tires) torque")
+        ax.set_title("Provided and requested (i.e. transmittable by the tires) torque and power")
         ax.set_xlabel("distance s in m")
         ax.set_ylabel("torque in Nm")
-        plt.legend(["combustion engine", "electric motor", "powertrain total", "requested"])
+        plt.legend(["electric motor", "powertrain total", "requested"])
+        plt.grid()
+        plt.show()
+
+        fig = plt.figure()
+        fig, ax = plt.subplots(figsize=(15, 15))
+        plt.plot(self.trackobj.dists_cl[:-1], self.power)
+        ax.set_title("Power")
+        ax.set_xlabel("distance s in m")
+        ax.set_ylabel("power in W")
         plt.grid()
         plt.show()
 
@@ -787,7 +807,7 @@ class Lap(object):
         if self.pars_solver["series"] == "F1":
             f_z_aero_valid = 18e3
         else:
-            f_z_aero_valid = 6e3
+            f_z_aero_valid = 15e2
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
