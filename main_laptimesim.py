@@ -181,6 +181,7 @@ def main(track_opts: dict,
 
             # plot lateral acceleration profile
             lap.plot_lat_acc()
+            #lap.plot_long_acc()
 
             # plot tire load profile
             lap.plot_tire_loads()
@@ -401,8 +402,8 @@ if __name__ == '__main__':
     # use_lift_coast:   switch to turn lift and coast on/off
     # lift_coast_dist:  [m] lift and coast before braking point
 
-    driver_opts_ = {"vel_subtr_corner": 0.5,
-                    "vel_lim_glob": None,
+    driver_opts_ = {"vel_subtr_corner": 5.5,
+                    "vel_lim_glob": 210.0 /3.6,
                     "yellow_s1": False,
                     "yellow_s2": False,
                     "yellow_s3": False,
@@ -411,7 +412,7 @@ if __name__ == '__main__':
                     "em_strategy": "FCFB",
                     "use_recuperation": True,
                     "use_lift_coast": True,
-                    "lift_coast_dist": 20.0}
+                    "lift_coast_dist":200.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -432,7 +433,7 @@ if __name__ == '__main__':
     # use_print_result:         set if result should be printed to console or not
 
     debug_opts_ = {"use_plot": True,
-                   "use_debug_plots": True,
+                   "use_debug_plots": False,
                    "use_plot_comparison_tph": False,
                    "use_print": True,
                    "use_print_result": True}
