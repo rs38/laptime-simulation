@@ -743,7 +743,7 @@ class Lap(object):
         ax.set_xlabel("distance s in m")
         ax.set_ylabel("lateral acceleration ay in m/s2")
         plt.grid()
-        plt.show()
+        plt.show(block=False)
 
     def plot_torques(self):
         fig = plt.figure()
@@ -757,16 +757,16 @@ class Lap(object):
         ax.set_ylabel("torque in Nm")
         plt.legend(["electric motor", "powertrain total", "requested"])
         plt.grid()
-        plt.show()
+        plt.show(block=False)
 
         fig = plt.figure()
-        fig, ax = plt.subplots(figsize=(15, 15))
+        fig, ax = plt.subplots(figsize=(10, 10))
         plt.plot(self.trackobj.dists_cl[:-1], self.power)
         ax.set_title("Power")
         ax.set_xlabel("distance s in m")
         ax.set_ylabel("power in W")
         plt.grid()
-        plt.show()
+        plt.show(block=False)
 
     def plot_tire_loads(self):
         f_z_stat_avg = 0.25 * self.driverobj.carobj.pars_general["m"] * self.driverobj.carobj.pars_general["g"]
@@ -793,7 +793,7 @@ class Lap(object):
         # plt.legend(["front left", "front right", "rear left", "rear right", "total", "avg. static",
         #             "7 * avg. static"])
         plt.grid()
-        plt.show()
+        plt.show(block=False)
 
     def plot_aero_forces(self):
         c_z_a_f = self.driverobj.carobj.pars_general["c_z_a_f"]
@@ -819,7 +819,7 @@ class Lap(object):
         ax.set_ylabel("amplitude in N")
         plt.legend(["drag", "downforce", "valid downforce range"])
         plt.grid()
-        plt.show()
+        plt.show(block=False)
 
     def plot_enginespeed_gears(self):
         fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, sharex=True)
@@ -834,8 +834,7 @@ class Lap(object):
         ax2.set_xlabel("distance s in m")
         ax2.set_ylabel("gear in -")
         ax2.grid()
-
-        plt.show()
+        plt.show(block=False)
 
     def plot_overview(self):
         # set bigger font size
