@@ -3,7 +3,6 @@ import time
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-import pkg_resources
 import pickle
 
 """
@@ -32,27 +31,10 @@ def main(track_opts: dict,
          sa_opts: dict,
          debug_opts: dict) -> laptimesim.src.lap.Lap:
 
-    # ------------------------------------------------------------------------------------------------------------------
-    # CHECK PYTHON DEPENDENCIES ----------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
-
     # get repo path
     repo_path = os.path.dirname(os.path.abspath(__file__))
 
-    # read dependencies from requirements.txt
-    requirements_path = os.path.join(repo_path, 'requirements.txt')
-    dependencies = []
-
-    with open(requirements_path, 'r') as fh:
-        line = fh.readline()
-
-        while line:
-            dependencies.append(line.rstrip())
-            line = fh.readline()
-
-    # check dependencies
-    #pkg_resources.require(dependencies)
-
+  
     # ------------------------------------------------------------------------------------------------------------------
     # INITIALIZATION ---------------------------------------------------------------------------------------------------
     # ------------------------------------------------------------------------------------------------------------------
@@ -339,7 +321,7 @@ def main(track_opts: dict,
 # MAIN FUNCTION CALL ---------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
-if __name__ == '__main__':
+
 
     # ------------------------------------------------------------------------------------------------------------------
     # USER INPUT -------------------------------------------------------------------------------------------------------
@@ -360,7 +342,7 @@ if __name__ == '__main__':
     # use_drs1:             DRS zone 1 switch
     # use_drs2:             DRS zone 2 switch
     # use_pit:              activate pit stop (requires _pit track file!)
-
+def doit():
     track_opts_ = {"trackname": "Hockenheim",
                    "flip_track": False,
                    "mu_weather": 1.0,
@@ -455,8 +437,15 @@ if __name__ == '__main__':
     # SIMULATION CALL --------------------------------------------------------------------------------------------------
     # ------------------------------------------------------------------------------------------------------------------
 
+    start_time = time.time()
+
     main(track_opts=track_opts_,
          solver_opts=solver_opts_,
          driver_opts=driver_opts_,
          sa_opts=sa_opts_,
          debug_opts=debug_opts_)
+    
+    print(f"Runtime: {time.time() - start_time:.2f} seconds")
+
+if __name__ == '__main__':
+    doit()
