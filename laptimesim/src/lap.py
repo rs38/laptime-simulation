@@ -4,8 +4,32 @@ import matplotlib.pyplot as plt
 from laptimesim.src.track import Track
 from laptimesim.src.driver import Driver
 
+from dataclasses import dataclass
 
+@dataclass(slots=True)
 class Lap(object):
+    driverobj: Driver
+    trackobj: Track
+    pars_solver: dict
+    debug_opts: dict
+    t_cl: np.ndarray 
+    vel_cl: np.ndarray 
+    n_cl: np.ndarray 
+    m_eng: np.ndarray 
+    m_e_motor: np.ndarray 
+    m_requ: np.ndarray 
+    power: np.ndarray 
+    es_cl: np.ndarray 
+    gear_cl: np.ndarray 
+    e_rec_e_motor: np.ndarray 
+    a_x_final: float = 0.0
+    e_rec_e_motor_max: float = 0.0
+    fuel_cons_cl: np.ndarray 
+    e_cons_cl: np.ndarray 
+    tire_loads: np.ndarray
+    e_es_to_e_motor_max: float = 0.0
+
+      
     """
     author:
     Alexander Heilmeier (based on the term thesis of Maximilian Geisslinger)
@@ -21,44 +45,35 @@ class Lap(object):
     start velocity. This has to be ensured by re-running the solver a second time.
     """
 
-    # ------------------------------------------------------------------------------------------------------------------
-    # SLOTS ------------------------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
-
-    __slots__ = ("__driverobj",
-                 "__trackobj",
-                 "__t_cl",
-                 "__vel_cl",
-                 "__n_cl",
-                 "__m_eng",
-                 "__m_e_motor",
-                 "__m_requ",
-                 "__power",
-                 "__es_cl",
-                 "__gear_cl",
-                 "__e_rec_e_motor",
-                 "__a_x_final",
-                 "__e_rec_e_motor_max",
-                 "__pars_solver",
-                 "__debug_opts",
-                 "__fuel_cons_cl",
-                 "__e_cons_cl",
-                 "__tire_loads",
-                 "__e_es_to_e_motor_max")
+    # __slots__ = ("__driverobj",
+    #              "__trackobj",
+    #              "__t_cl",
+    #              "__vel_cl",
+    #              "__n_cl",
+    #              "__m_eng",
+    #              "__m_e_motor",
+    #              "__m_requ",
+    #              "__power",
+    #              "__es_cl",
+    #              "__gear_cl",
+    #              "__e_rec_e_motor",
+    #              "__a_x_final",
+    #              "__e_rec_e_motor_max",
+    #              "__pars_solver",
+    #              "__debug_opts",
+    #              "__fuel_cons_cl",
+    #              "__e_cons_cl",
+    #              "__tire_loads",
+    #              "__e_es_to_e_motor_max")
 
     # ------------------------------------------------------------------------------------------------------------------
     # CONSTRUCTOR ------------------------------------------------------------------------------------------------------
     # ------------------------------------------------------------------------------------------------------------------
 
-    def __init__(self, driverobj: Driver, trackobj: Track, pars_solver: dict, debug_opts: dict):
 
-        # save driver and track objects
-        self.driverobj = driverobj
-        self.trackobj = trackobj
-
-        # save solver parameters and debug options
-        self.pars_solver = pars_solver
-        self.debug_opts = debug_opts
+    def __post_init__(self):
+        #def __init__(self, driverobj: Driver, trackobj: Track, pars_solver: dict, debug_opts: dict):
+        trackobj = self.trackobj
 
         # adjust solver parameters
         if self.trackobj.pars_track["use_pit"]:
@@ -66,7 +81,7 @@ class Lap(object):
             self.pars_solver["v_start"] = self.trackobj.pars_track["pitspeed"]
             self.pars_solver["find_v_start"] = False
 
-        # initialize lap variables
+        #initialize lap variables
         self.t_cl = np.zeros(trackobj.no_points_cl)     # [s] lap time at the beginning of a step
         self.vel_cl = np.zeros(trackobj.no_points_cl)   # [m/s] velocity at the beginning of a step
         self.n_cl = np.zeros(trackobj.no_points_cl)     # [1/s] rev at the beginning of a step
