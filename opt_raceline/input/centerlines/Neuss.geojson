@@ -1,0 +1,992 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "id": "way/37830217",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "6",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "access": "permissive",
+                "highway": "service",
+                "name": "Am Königsmorgen",
+                "note": "name correct?",
+                "source": "Yahoo;knowledge",
+                "id": "way/37830217"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        6.7056195,
+                        51.201686
+                    ],
+                    [
+                        6.7056779,
+                        51.2017049
+                    ],
+                    [
+                        6.7059205,
+                        51.2017834
+                    ],
+                    [
+                        6.7059381,
+                        51.2017891
+                    ],
+                    [
+                        6.7059826,
+                        51.2018026
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/50240115",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "7",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "access": "permissive",
+                "highway": "service",
+                "source": "Yahoo;knowledge",
+                "surface": "asphalt",
+                "id": "way/50240115"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        6.7050972,
+                        51.2015927
+                    ],
+                    [
+                        6.7050373,
+                        51.2016797
+                    ],
+                    [
+                        6.7051162,
+                        51.2017063
+                    ],
+                    [
+                        6.7053677,
+                        51.2017909
+                    ],
+                    [
+                        6.7054047,
+                        51.2018011
+                    ],
+                    [
+                        6.7054461,
+                        51.2018058
+                    ],
+                    [
+                        6.7054793,
+                        51.2018057
+                    ],
+                    [
+                        6.7055103,
+                        51.2017974
+                    ],
+                    [
+                        6.7055353,
+                        51.2017848
+                    ],
+                    [
+                        6.7055515,
+                        51.2017722
+                    ],
+                    [
+                        6.7056195,
+                        51.201686
+                    ],
+                    [
+                        6.7061769,
+                        51.201042
+                    ],
+                    [
+                        6.7069656,
+                        51.2007568
+                    ],
+                    [
+                        6.7075355,
+                        51.2005507
+                    ],
+                    [
+                        6.7084573,
+                        51.2004872
+                    ],
+                    [
+                        6.7084314,
+                        51.2004293
+                    ],
+                    [
+                        6.7083083,
+                        51.2001844
+                    ],
+                    [
+                        6.7080231,
+                        51.2002057
+                    ],
+                    [
+                        6.7074056,
+                        51.2002526
+                    ],
+                    [
+                        6.7057192,
+                        51.200866
+                    ],
+                    [
+                        6.7050972,
+                        51.2015927
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "way/50240122",
+            "properties": {
+                "timestamp": "2019-08-29T15:42:10Z",
+                "version": "4",
+                "changeset": "73890082",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "access": "permissive",
+                "highway": "service",
+                "source": "Yahoo;knowledge",
+                "surface": "asphalt",
+                "id": "way/50240122"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        6.7083083,
+                        51.2001844
+                    ],
+                    [
+                        6.7091273,
+                        51.2000123
+                    ],
+                    [
+                        6.70915,
+                        51.200014
+                    ],
+                    [
+                        6.7091704,
+                        51.2000213
+                    ],
+                    [
+                        6.7091876,
+                        51.2000346
+                    ],
+                    [
+                        6.7091991,
+                        51.2000533
+                    ],
+                    [
+                        6.7092935,
+                        51.2002728
+                    ],
+                    [
+                        6.7092955,
+                        51.2002886
+                    ],
+                    [
+                        6.7092884,
+                        51.2003058
+                    ],
+                    [
+                        6.7092727,
+                        51.2003175
+                    ],
+                    [
+                        6.7092479,
+                        51.2003277
+                    ],
+                    [
+                        6.7090048,
+                        51.2003778
+                    ],
+                    [
+                        6.7084573,
+                        51.2004872
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594840",
+            "properties": {
+                "timestamp": "2019-08-29T15:42:10Z",
+                "version": "4",
+                "changeset": "73890082",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/638594840"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7051648,
+                    51.2007653
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594844",
+            "properties": {
+                "timestamp": "2019-08-29T15:42:10Z",
+                "version": "4",
+                "changeset": "73890082",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/638594844"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7050353,
+                    51.2008022
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594848",
+            "properties": {
+                "timestamp": "2019-02-24T00:04:33Z",
+                "version": "3",
+                "changeset": "67505646",
+                "user": "Glg11",
+                "uid": "29765",
+                "id": "node/638594848"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7053803,
+                    51.2007466
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594850",
+            "properties": {
+                "timestamp": "2019-08-29T15:42:10Z",
+                "version": "4",
+                "changeset": "73890082",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/638594850"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7052793,
+                    51.2007405
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594852",
+            "properties": {
+                "timestamp": "2011-10-29T17:57:18Z",
+                "version": "3",
+                "changeset": "9686976",
+                "user": "Sharlin",
+                "uid": "141931",
+                "highway": "turning_circle",
+                "id": "node/638594852"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7057192,
+                    51.200866
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594863",
+            "properties": {
+                "timestamp": "2019-02-24T00:04:33Z",
+                "version": "3",
+                "changeset": "67505646",
+                "user": "Glg11",
+                "uid": "29765",
+                "id": "node/638594863"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7046727,
+                    51.2016209
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594864",
+            "properties": {
+                "timestamp": "2011-02-10T19:29:05Z",
+                "version": "2",
+                "changeset": "7248608",
+                "user": "Sharlin",
+                "uid": "141931",
+                "id": "node/638594864"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7046024,
+                    51.2016158
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594865",
+            "properties": {
+                "timestamp": "2019-02-24T00:04:33Z",
+                "version": "3",
+                "changeset": "67505646",
+                "user": "Glg11",
+                "uid": "29765",
+                "id": "node/638594865"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7049574,
+                    51.2016751
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594867",
+            "properties": {
+                "timestamp": "2011-02-10T19:29:11Z",
+                "version": "3",
+                "changeset": "7248608",
+                "user": "Sharlin",
+                "uid": "141931",
+                "id": "node/638594867"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7044761,
+                    51.2016803
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594869",
+            "properties": {
+                "timestamp": "2022-07-17T12:45:43Z",
+                "version": "3",
+                "changeset": "123719984",
+                "user": "Sharlin",
+                "uid": "141931",
+                "id": "node/638594869"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7045522,
+                    51.2016333
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594898",
+            "properties": {
+                "timestamp": "2010-02-13T18:03:16Z",
+                "version": "1",
+                "changeset": "3867048",
+                "user": "Sharlin",
+                "uid": "141931",
+                "id": "node/638594898"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7064864,
+                    51.2011531
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594900",
+            "properties": {
+                "timestamp": "2010-12-17T14:43:28Z",
+                "version": "2",
+                "changeset": "6687309",
+                "user": "rurseekatze",
+                "uid": "81244",
+                "id": "node/638594900"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7065543,
+                    51.2012087
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594924",
+            "properties": {
+                "timestamp": "2022-02-05T17:27:08Z",
+                "version": "4",
+                "changeset": "117053945",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/638594924"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.70768,
+                    51.1997763
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594926",
+            "properties": {
+                "timestamp": "2010-12-17T14:43:22Z",
+                "version": "2",
+                "changeset": "6687309",
+                "user": "rurseekatze",
+                "uid": "81244",
+                "id": "node/638594926"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7073084,
+                    51.2000467
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594932",
+            "properties": {
+                "timestamp": "2022-02-05T17:27:08Z",
+                "version": "3",
+                "changeset": "117053945",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/638594932"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7089243,
+                    51.1995757
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594949",
+            "properties": {
+                "timestamp": "2010-02-13T18:03:17Z",
+                "version": "1",
+                "changeset": "3867048",
+                "user": "Sharlin",
+                "uid": "141931",
+                "id": "node/638594949"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7090012,
+                    51.1997317
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594957",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "4",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/638594957"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7077901,
+                    51.2010894
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594969",
+            "properties": {
+                "timestamp": "2010-12-17T14:43:54Z",
+                "version": "2",
+                "changeset": "6687309",
+                "user": "rurseekatze",
+                "uid": "81244",
+                "id": "node/638594969"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7086622,
+                    51.2010335
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/638594978",
+            "properties": {
+                "timestamp": "2010-12-17T14:42:21Z",
+                "version": "2",
+                "changeset": "6687309",
+                "user": "rurseekatze",
+                "uid": "81244",
+                "id": "node/638594978"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.708618,
+                    51.2008133
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/1042897822",
+            "properties": {
+                "timestamp": "2022-02-05T17:27:08Z",
+                "version": "2",
+                "changeset": "117053945",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/1042897822"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7048779,
+                    51.2008457
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/1428251514",
+            "properties": {
+                "timestamp": "2011-09-09T19:00:23Z",
+                "version": "1",
+                "changeset": "9256878",
+                "user": "rurseekatze",
+                "uid": "81244",
+                "id": "node/1428251514"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7070855,
+                    51.2009988
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/6757365257",
+            "properties": {
+                "timestamp": "2019-08-29T15:42:10Z",
+                "version": "1",
+                "changeset": "73890082",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/6757365257"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7053415,
+                    51.2007376
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/6815999754",
+            "properties": {
+                "timestamp": "2022-02-05T17:27:08Z",
+                "version": "2",
+                "changeset": "117053945",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "barrier": "bollard",
+                "id": "node/6815999754"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7076911,
+                    51.1997897
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/6815999759",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "2",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/6815999759"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7076862,
+                    51.2008608
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/6815999772",
+            "properties": {
+                "timestamp": "2019-09-22T18:47:09Z",
+                "version": "1",
+                "changeset": "74779126",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "barrier": "bollard",
+                "bollard": "removable",
+                "id": "node/6815999772"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.705436,
+                    51.2007662
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/6815999783",
+            "properties": {
+                "timestamp": "2023-02-25T07:46:12Z",
+                "version": "2",
+                "changeset": "132995173",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "barrier": "bollard",
+                "bollard": "removable",
+                "maxwidth:physical": "3",
+                "id": "node/6815999783"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7059205,
+                    51.2017834
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481633040",
+            "properties": {
+                "timestamp": "2022-02-05T17:27:08Z",
+                "version": "1",
+                "changeset": "117053945",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481633040"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7086552,
+                    51.2009987
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481633041",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "2",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481633041"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7077741,
+                    51.2010599
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481633060",
+            "properties": {
+                "timestamp": "2022-02-05T17:27:08Z",
+                "version": "1",
+                "changeset": "117053945",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481633060"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7072866,
+                    51.2009834
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481633061",
+            "properties": {
+                "timestamp": "2022-02-05T17:27:08Z",
+                "version": "1",
+                "changeset": "117053945",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481633061"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7065315,
+                    51.2011901
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481633063",
+            "properties": {
+                "timestamp": "2022-02-05T17:27:08Z",
+                "version": "1",
+                "changeset": "117053945",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481633063"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7045882,
+                    51.2016215
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746562",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746562"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7069861,
+                    51.2007981
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746563",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746563"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7062627,
+                    51.2010728
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746566",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746566"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.707561,
+                    51.2006105
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746567",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746567"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7084889,
+                    51.2005513
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746569",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746569"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7073876,
+                    51.2002144
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746570",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746570"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7079884,
+                    51.2001623
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746571",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746571"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7091084,
+                    51.1999702
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746575",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746575"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7075194,
+                    51.2005138
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "id": "node/9481746576",
+            "properties": {
+                "timestamp": "2022-02-05T18:26:18Z",
+                "version": "1",
+                "changeset": "117056258",
+                "user": "rempshaener",
+                "uid": "5064615",
+                "id": "node/9481746576"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    6.7061187,
+                    51.2010196
+                ]
+            }
+        }
+    ]
+}

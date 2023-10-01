@@ -94,7 +94,7 @@ def main(track_opts: dict,
                 break
 
         # plot trackmap
-        #track.plot_trackmap(mapfilepath=mapfilepath)
+        track.plot_trackmap(mapfilepath=mapfilepath)
 
         # plot curvature
         #track.plot_curvature()
@@ -202,7 +202,7 @@ def main(track_opts: dict,
                 # simulate lap and save lap time
                 lap.simulate_lap()
                 sa_t_lap[i] = lap.t_cl[-1]
-                sa_fuel_cons[i] = lap.fuel_cons_cl[-1]
+                sa_fuel_cons[i] = lap.es_cl[-1]
 
                 # reset lap
                 lap.reset_lap()
@@ -236,7 +236,7 @@ def main(track_opts: dict,
         v_tmp = (lap.vel_cl[0] - lap.vel_cl[-1]) * 3.6
         print("Delta: %.1f km/h" % v_tmp)
         print("-" * 50)
-        print("Length of lap: %.2f km" % (lap.trackobj.dists_cl[-1] ))
+        print("Length of lap: %.2f km" % (lap.trackobj.dists_cl[-1] /1000 ))
         print("Consumption with and without regen: %.2f kJ/lap | %.2f kJ/lap" % (lap.es_cl[-1]/-1000.0, lap.e_cons_cl[-1] / 1000.0)) # [J] -> [kJ]
         print("Consumption with and without regen: %.2f kWh/lap | %.2f kWh/lap" % (lap.es_cl[-1]/-3600000, lap.e_cons_cl[-1] / 3600000.0)) # [J] -> [kJ]
         print("Consumption avg: %.2f kWh/100km" % (lap.es_cl[-1] / 3600000.0 / (lap.trackobj.dists_cl[-1] / 1000.0) * -100.0)) 
@@ -254,7 +254,7 @@ def main(track_opts: dict,
             fuel_cons_diff = sa_fuel_cons[-1] - sa_fuel_cons[0]
 
             print("Average sensitivity of lap time to mass: %.3f s/kg" % (t_lap_diff / m_diff))
-            print("Average sensitivity of fuel consumption to mass: %.5f kg/kg" % (fuel_cons_diff / m_diff))
+            print("Average sensitivity of fuel consumption to mass: %.5f kWh/kg" % (fuel_cons_diff /( m_diff * -3600000)))   
             print("-" * 50)
 
         else:
@@ -343,7 +343,7 @@ def main(track_opts: dict,
     # use_drs2:             DRS zone 2 switch
     # use_pit:              activate pit stop (requires _pit track file!)
 def doit():
-    track_opts_ = {"trackname": "Hockenheim",
+    track_opts_ = {"trackname": "Neuss",
                    "flip_track": False,
                    "mu_weather": 1.0,
                    "interp_stepsize_des": 1.0,
@@ -365,7 +365,7 @@ def doit():
     solver_opts_ = {"vehicle": "BEV_Taycan.ini",
                     "series": "FE",
                     "limit_braking_weak_side": 'all',
-                    "v_start": 155.0 / 3.6,
+                    "v_start": 20.0 / 3.6,
                     "find_v_start": True,
                     "max_no_em_iters": 10,
                     "es_diff_max": 1.0}
@@ -406,7 +406,7 @@ def doit():
 
     sa_opts_ = {"use_sa": False,
                 "sa_type": "mass",
-                "range_1": [733.0, 833.0, 5],
+                "range_1": [2380.0, 2460.0, 5],
                 "range_2": None}
 
     # debug options ----------------------------------------------------------------------------------------------------

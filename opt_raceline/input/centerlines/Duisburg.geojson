@@ -1,0 +1,647 @@
+{
+    "type": "FeatureCollection",
+    "generator": "overpass-ide",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+    "timestamp": "2023-10-01T09:18:35Z",
+    "features": [
+     
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/124195729",
+          "destination": "Düsseldorf",
+          "destination:ref": "B 8",
+          "highway": "motorway_link",
+          "lanes": "1",
+          "lit": "no",
+          "oneway": "yes",
+          "opening_date": "10/2014"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7580638,
+              51.3535265
+            ],
+            [
+              6.7574531,
+              51.3535677
+            ],
+            [
+              6.7572046,
+              51.3536559
+            ],
+            [
+              6.7570429,
+              51.3537858
+            ],
+            [
+              6.7569432,
+              51.3539461
+            ],
+            [
+              6.7569389,
+              51.3540919
+            ],
+            [
+              6.7569853,
+              51.3542191
+            ],
+            [
+              6.7571054,
+              51.3543239
+            ],
+            [
+              6.7576773,
+              51.3547256
+            ],
+            [
+              6.7580158,
+              51.3549235
+            ],
+            [
+              6.7582726,
+              51.3550011
+            ],
+            [
+              6.7585683,
+              51.3549954
+            ],
+            [
+              6.7587952,
+              51.3549377
+            ],
+            [
+              6.7589777,
+              51.3548447
+            ],
+            [
+              6.7590944,
+              51.3547278
+            ],
+            [
+              6.7591711,
+              51.3545807
+            ],
+            [
+              6.759213,
+              51.3544382
+            ],
+            [
+              6.7591367,
+              51.3542077
+            ]
+          ]
+        },
+        "id": "way/124195729"
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/124195733",
+          "destination": "Dinslaken;Duisburg",
+          "destination:ref": "A 59",
+          "highway": "motorway_link",
+          "lanes": "1",
+          "lit": "no",
+          "oneway": "yes",
+          "surface": "asphalt"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7593112,
+              51.3531541
+            ],
+            [
+              6.7595921,
+              51.3531033
+            ],
+            [
+              6.7598119,
+              51.3530343
+            ],
+            [
+              6.7599292,
+              51.3529347
+            ],
+            [
+              6.7600068,
+              51.3528568
+            ],
+            [
+              6.7600605,
+              51.3527672
+            ],
+            [
+              6.7600687,
+              51.3526783
+            ],
+            [
+              6.7600684,
+              51.3526159
+            ],
+            [
+              6.7600473,
+              51.3525146
+            ],
+            [
+              6.7599829,
+              51.352424
+            ],
+            [
+              6.7598744,
+              51.3523146
+            ],
+            [
+              6.7588831,
+              51.3518229
+            ],
+            [
+              6.7587239,
+              51.3517529
+            ],
+            [
+              6.7584896,
+              51.3516935
+            ],
+            [
+              6.7582474,
+              51.3516942
+            ],
+            [
+              6.7580132,
+              51.3517397
+            ],
+            [
+              6.7578817,
+              51.3517961
+            ],
+            [
+              6.7577544,
+              51.3518551
+            ],
+            [
+              6.7576259,
+              51.3519925
+            ],
+            [
+              6.7575878,
+              51.3520916
+            ],
+            [
+              6.7575884,
+              51.3522278
+            ],
+            [
+              6.7576323,
+              51.3523584
+            ],
+            [
+              6.7577487,
+              51.3525726
+            ]
+          ]
+        },
+        "id": "way/124195733"
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/124195735",
+          "destination": "Essen",
+          "destination:ref": "A 524",
+          "highway": "motorway_link",
+          "lanes": "1",
+          "lit": "no",
+          "oneway": "yes",
+          "opening_date": "2013-08-23"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7573177,
+              51.3522987
+            ],
+            [
+              6.7569705,
+              51.3520271
+            ],
+            [
+              6.7567442,
+              51.3518834
+            ],
+            [
+              6.7564612,
+              51.3518212
+            ],
+            [
+              6.7562442,
+              51.3518227
+            ],
+            [
+              6.7560228,
+              51.3518525
+            ],
+            [
+              6.7558428,
+              51.351923
+            ],
+            [
+              6.7556868,
+              51.3520224
+            ],
+            [
+              6.7555898,
+              51.3521783
+            ],
+            [
+              6.7555167,
+              51.3525137
+            ],
+            [
+              6.7555195,
+              51.3527113
+            ],
+            [
+              6.7555964,
+              51.3528678
+            ],
+            [
+              6.7557406,
+              51.352981
+            ],
+            [
+              6.7558938,
+              51.3530582
+            ],
+            [
+              6.7560869,
+              51.3530958
+            ],
+            [
+              6.7565642,
+              51.3531417
+            ]
+          ]
+        },
+        "id": "way/124195735"
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/124195737",
+          "destination": "Krefeld;Duisburg-Huckingen",
+          "destination:ref": "A 524",
+          "highway": "motorway_link",
+          "lanes": "1",
+          "lit": "no",
+          "oneway": "yes",
+          "opening_date": "12/2013"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.759455,
+              51.3543457
+            ],
+            [
+              6.7597975,
+              51.3545809
+            ],
+            [
+              6.7599486,
+              51.3546643
+            ],
+            [
+              6.7601694,
+              51.354726
+            ],
+            [
+              6.7604097,
+              51.3547338
+            ],
+            [
+              6.760605,
+              51.3547143
+            ],
+            [
+              6.760802,
+              51.3546426
+            ],
+            [
+              6.7609285,
+              51.3545709
+            ],
+            [
+              6.7614677,
+              51.3540034
+            ],
+            [
+              6.7615283,
+              51.3538928
+            ],
+            [
+              6.7615486,
+              51.3537956
+            ],
+            [
+              6.7615149,
+              51.3536659
+            ],
+            [
+              6.7614475,
+              51.353594
+            ],
+            [
+              6.7613134,
+              51.3535102
+            ],
+            [
+              6.7611394,
+              51.3534454
+            ],
+            [
+              6.7609605,
+              51.3534281
+            ],
+            [
+              6.7605524,
+              51.3534361
+            ]
+          ]
+        },
+        "id": "way/124195737"
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/132869165",
+          "destination:lanes": "Düsseldorf|Düsseldorf|Essen;Duisburg-Rahm",
+          "destination:ref:lanes": "A 59|A 59|A 524",
+          "highway": "motorway",
+          "lanes": "3",
+          "lit": "no",
+          "maxspeed": "100",
+          "oneway": "yes",
+          "ref": "A 59",
+          "surface": "asphalt",
+          "toll:N3": "yes",
+          "turn:lanes": "through|through|slight_right",
+          "destination": ""
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7580028,
+              51.3530523
+            ],
+            [
+              6.7573177,
+              51.3522987
+            ]
+          ]
+        },
+        "id": "way/132869165"
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/132869166",
+          "bridge": "yes",
+          "destination:lanes": "Dinslaken;Duisburg|Dinslaken;Duisburg|Krefeld;Duisburg-Huckingen",
+          "destination:ref:lanes": "A 59|A 59|A 524",
+          "highway": "motorway",
+          "lanes": "3",
+          "layer": "1",
+          "lit": "no",
+          "maxspeed": "100",
+          "oneway": "yes",
+          "ref": "A 59",
+          "surface": "asphalt",
+          "turn:lanes": "through|through|slight_right"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7582173,
+              51.3530543
+            ],
+            [
+              6.758788,
+              51.3536605
+            ]
+          ]
+        },
+        "id": "way/132869166"
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/132869170",
+          "destination:lanes": "Dinslaken;Duisburg|Dinslaken;Duisburg|Krefeld;Duisburg-Huckingen",
+          "destination:ref:lanes": "A 59|A 59|A 524",
+          "highway": "motorway",
+          "lanes": "3",
+          "lit": "no",
+          "maxspeed": "100",
+          "oneway": "yes",
+          "ref": "A 59",
+          "surface": "asphalt",
+          "turn:lanes": "through|through|slight_right"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.758788,
+              51.3536605
+            ],
+            [
+              6.759455,
+              51.3543457
+            ]
+          ]
+        },
+        "id": "way/132869170"
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/132869177",
+          "bridge": "yes",
+          "destination:lanes": "Düsseldorf|Düsseldorf|Essen;Duisburg-Rahm",
+          "destination:ref:lanes": "A 59|A 59|A 524",
+          "highway": "motorway",
+          "lanes": "3",
+          "layer": "1",
+          "lit": "no",
+          "maxspeed": "100",
+          "oneway": "yes",
+          "ref": "A 59",
+          "surface": "asphalt",
+          "toll:N3": "yes",
+          "turn:lanes": "through|through|slight_right"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.758617,
+              51.353671
+            ],
+            [
+              6.7580028,
+              51.3530523
+            ]
+          ]
+        },
+        "id": "way/132869177"
+      },
+     
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/166273427",
+          "destination:lanes": "Düsseldorf|Düsseldorf|Essen;Duisburg-Rahm",
+          "destination:ref:lanes": "A 59|A 59|A 524",
+          "highway": "motorway",
+          "lanes": "3",
+          "lit": "no",
+          "maxspeed": "100",
+          "oneway": "yes",
+          "ref": "A 59",
+          "surface": "asphalt",
+          "turn:lanes": "through|through|slight_right"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7591367,
+              51.3542077
+            ],
+            [
+              6.758617,
+              51.353671
+            ]
+          ]
+        },
+        "id": "way/166273427"
+      },
+     
+     
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/232605721",
+          "destination:lanes": "Dinslaken;Duisburg|Dinslaken;Duisburg|Krefeld;Duisburg-Huckingen",
+          "destination:ref:lanes": "A 59|A 59|A 524",
+          "highway": "motorway",
+          "lanes": "3",
+          "lit": "no",
+          "maxspeed": "100",
+          "oneway": "yes",
+          "ref": "A 59",
+          "surface": "asphalt",
+          "toll:N3": "yes",
+          "turn:lanes": "through|through|slight_right"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7577487,
+              51.3525726
+            ],
+            [
+              6.7582173,
+              51.3530543
+            ]
+          ]
+        },
+        "id": "way/232605721"
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/235255802",
+          "description": "Verteilerfahrbahn der A 524",
+          "destination:lanes": "Essen|Dinslaken;Duisburg",
+          "destination:ref:lanes": "A 524|A 59",
+          "highway": "motorway_link",
+          "lanes": "2",
+          "lit": "no",
+          "maxheight": "default",
+          "maxspeed": "80",
+          "oneway": "yes",
+          "turn:lanes": "through|slight_right"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7565642,
+              51.3531417
+            ],
+            [
+              6.7577844,
+              51.3531737
+            ],
+            [
+              6.7585224,
+              51.3531677
+            ],
+            [
+              6.7593112,
+              51.3531541
+            ]
+          ]
+        },
+        "id": "way/235255802"
+      },
+    
+     
+      {
+        "type": "Feature",
+        "properties": {
+          "@id": "way/328735279",
+          "description": "Verteilerfahrbahn der A 524",
+          "destination:lanes": "Krefeld;Duisburg-Huckingen|Düsseldorf",
+          "destination:ref:lanes": "A 524|B 8",
+          "highway": "motorway_link",
+          "lanes": "2",
+          "lit": "no",
+          "maxheight": "default",
+          "maxspeed": "60",
+          "oneway": "yes",
+          "opening_date": "10/2014",
+          "turn:lanes": "through|slight_right"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              6.7605524,
+              51.3534361
+            ],
+            [
+              6.7591133,
+              51.3535127
+            ],
+            [
+              6.7580638,
+              51.3535265
+            ]
+          ]
+        },
+        "id": "way/328735279"
+      }
+    ]
+  }

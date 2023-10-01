@@ -146,13 +146,13 @@ def main(track_pars: dict,
     # PREPARE TRACK ----------------------------------------------------------------------------------------------------
     # ------------------------------------------------------------------------------------------------------------------
 
-    # use spline approximation to prepare centerline input
-    # track_interp = tph.spline_approximation.spline_approximation(track=track_imp,
-    #                          stepsize_prep=stepsize_opts["stepsize_prep"],
-    #                          stepsize_reg=stepsize_opts["stepsize_reg"],
-    #                          k_reg=reg_smooth_opts["k_reg"],
-    #                          s_reg=reg_smooth_opts["s_reg"],
-    #                          debug=True)
+    #use spline approximation to prepare centerline input
+    track_interp = tph.spline_approximation.spline_approximation(track=track_imp,
+                             stepsize_prep=stepsize_opts["stepsize_prep"],
+                             stepsize_reg=stepsize_opts["stepsize_reg"],
+                             k_reg=reg_smooth_opts["k_reg"],
+                             s_reg=reg_smooth_opts["s_reg"],
+                             debug=True)
 
     track_interp = track_imp
 
@@ -301,7 +301,7 @@ def main(track_pars: dict,
 # MAIN FUNCTION CALL ---------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
 
-if __name__ == '__main__':
+def doit():
 
     # ------------------------------------------------------------------------------------------------------------------
     # USER INPUT -------------------------------------------------------------------------------------------------------
@@ -333,9 +333,9 @@ if __name__ == '__main__':
     #                "track_length": 5303.0,
     #                "track_width": None}
     
-    track_pars_ = {"location": "test",
-                   "track_length": 400.0,
-                   "track_width": 10.0}
+    track_pars_ = {"location": "Leipzig",
+                   "track_length": 3780.0,
+                   "track_width": 14.0}
 
     # track_pars_ = {"location": "IMS",
     #                "track_length": 4023.0,
@@ -387,7 +387,10 @@ if __name__ == '__main__':
 
     # track_pars_ = {"location": "Suzuka",
     #                "track_length": 5807.0,
-    #                "track_width": None}
+    #                "track_width": 15}
+    # track_pars_ = {"location": "Duisburg",
+    #                "track_length": 2200.0,
+    #                "track_width": 8}
 
     # track_pars_ = {"location": "YasMarina",
     #                "track_length": 5554.0,
@@ -434,10 +437,11 @@ if __name__ == '__main__':
     # new_start:        [x_m, y_m] coordinates of new starting point
     # plot_track:       plot imported as well as smoothed track
 
-    imp_opts_ = {"mode": "track",
+
+    imp_opts_ = {"mode": "centerline",
                  "flip_imp_track": False,
-                 "set_new_start": True,
-                 "new_start": [0.0, 0.0],
+                 "set_new_start": False,
+                 "new_start": [10.0, 0.0],
                  "plot_track": True}
 
     # spline regression smoothing options ------------------------------------------------------------------------------
@@ -445,7 +449,7 @@ if __name__ == '__main__':
     # s_reg:    [-] smoothing factor -> range [1.0, 100.0] (play a little bit)
 
     reg_smooth_opts_ = {"k_reg": 3,
-                        "s_reg": 40.0}
+                        "s_reg": 80.0}
 
     # set stepsizes used during optimization ---------------------------------------------------------------------------
     # stepsize_prep:                [m] used for linear interpolation before spline approximation
@@ -462,7 +466,7 @@ if __name__ == '__main__':
     # iqp_iters_min:            [-] minimum number of iterations for the IQP
     # iqp_curverror_allowed:    [rad/m] maximum allowed curvature error for the IQP
 
-    optim_opts_mincurv_ = {"width_opt": 1.5,
+    optim_opts_mincurv_ = {"width_opt": 1.8,
                            "curvlim": 0.12,
                            "iqp_iters_min": 3,
                            "iqp_curverror_allowed": 0.01}
@@ -477,3 +481,7 @@ if __name__ == '__main__':
          reg_smooth_opts=reg_smooth_opts_,
          stepsize_opts=stepsize_opts_,
          optim_opts_mincurv=optim_opts_mincurv_)
+
+
+if __name__ == '__main__':
+    doit()
