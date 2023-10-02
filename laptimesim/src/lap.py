@@ -870,7 +870,7 @@ class Lap(object):
         plt.grid()
 
         # plot global title
-        title = "lap time: %.3f s" % self.t_cl[-1]
+        title = f"Lap Time: {self.t_cl[-1]:.2f} s, avg. speed: {np.mean(self.vel_cl) * 3.6:.1f} km/h"
         plt.title(title)
 
         # --------------------------------------------------------------------------------------------------------------
@@ -981,6 +981,8 @@ class Lap(object):
 
         # set tight plot layout and show plot
         plt.tight_layout()
+        consump = (self.es_cl[-1] / 3600000.0 / (self.trackobj.dists_cl[-1] / 1000.0) * -100.0)
+        plt.text(0.5, -0.22, f"kWh/100km:{consump:.1f}", ha="center", transform=ax1.transAxes)
         plt.show()
 
         # reset font size
@@ -991,7 +993,7 @@ class Lap(object):
         # REVS AND GEARS -----------------------------------------------------------------------------------------------
         # --------------------------------------------------------------------------------------------------------------
 
-        fig, ax1 = plt.subplots(figsize=(12.0, 9.0))
+        fig, ax1 = plt.subplots(figsize=(10.0, 7.0))
 
         ax1.plot(self.trackobj.dists_cl, self.n_cl * 60.0)
         ax1.set_xlabel("distance in m")

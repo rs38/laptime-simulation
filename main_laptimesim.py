@@ -237,6 +237,7 @@ def main(track_opts: dict,
         print("Delta: %.1f km/h" % v_tmp)
         print("-" * 50)
         print("Length of lap: %.2f km" % (lap.trackobj.dists_cl[-1] /1000 ))
+        print("Average velocity: %.2f km/h" % (lap.trackobj.dists_cl[-1] / lap.t_cl[-1] * 3.6))
         print("Consumption with and without regen: %.2f kJ/lap | %.2f kJ/lap" % (lap.es_cl[-1]/-1000.0, lap.e_cons_cl[-1] / 1000.0)) # [J] -> [kJ]
         print("Consumption with and without regen: %.2f kWh/lap | %.2f kWh/lap" % (lap.es_cl[-1]/-3600000, lap.e_cons_cl[-1] / 3600000.0)) # [J] -> [kJ]
         print("Consumption avg: %.2f kWh/100km" % (lap.es_cl[-1] / 3600000.0 / (lap.trackobj.dists_cl[-1] / 1000.0) * -100.0)) 
@@ -343,7 +344,7 @@ def main(track_opts: dict,
     # use_drs2:             DRS zone 2 switch
     # use_pit:              activate pit stop (requires _pit track file!)
 def doit():
-    track_opts_ = {"trackname": "Neuss",
+    track_opts_ = {"trackname": "Duisburg",
                    "flip_track": False,
                    "mu_weather": 1.0,
                    "interp_stepsize_des": 1.0,
@@ -417,18 +418,20 @@ def doit():
     # use_print_result:         set if result should be printed to console or not
 
     debug_opts_ = {"use_plot": True,
-                   "use_debug_plots": True,
+                   "use_debug_plots": False,
                    "use_plot_comparison_tph": False,
                    "use_print": True,
                    "use_print_result": True}
     
     # ###  todo list:
     # 
-    # limit recuperation power to xy kw
+    # limit only recuperation power to xy kw
     # lift and coast not working properly     
     # plot longitudinal acceleration
     # plot resistance including rolling resistance
     # plot power over time
+    # add time-constant energy consumption, standby and cooling
+
 
 
 
