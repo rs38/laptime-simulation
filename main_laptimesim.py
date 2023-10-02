@@ -347,7 +347,7 @@ def doit():
     track_opts_ = {"trackname": "Duisburg",
                    "flip_track": False,
                    "mu_weather": 1.0,
-                   "interp_stepsize_des": 1.0,
+                   "interp_stepsize_des": 2.5,
                    "curv_filt_width": 10.0,
                    "use_drs1": False,
                    "use_drs2": False,
@@ -366,7 +366,7 @@ def doit():
     solver_opts_ = {"vehicle": "BEV_Taycan.ini",
                     "series": "FE",
                     "limit_braking_weak_side": 'all',
-                    "v_start": 20.0 / 3.6,
+                    "v_start": 120.0 / 3.6,
                     "find_v_start": True,
                     "max_no_em_iters": 10,
                     "es_diff_max": 1.0}
@@ -387,17 +387,17 @@ def doit():
     # use_lift_coast:   switch to turn lift and coast on/off
     # lift_coast_dist:  [m] lift and coast before braking point
 
-    driver_opts_ = {"vel_subtr_corner": 10/3.6,
-                    "vel_lim_glob": 220.0 /3.6,
-                    "yellow_s1": False,
-                    "yellow_s2": False,
-                    "yellow_s3": False,
+    driver_opts_ = {"vel_subtr_corner": 15/3.6,
+                    "vel_lim_glob": 120.0 /3.6,
+                    "yellow_s1": True,
+                    "yellow_s2": True,
+                    "yellow_s3": True,
                     "yellow_throttle": 0.5,
                     "initial_energy": 0.0e6,
                     "em_strategy": "FCFB",
                     "use_recuperation": True,
                     "use_lift_coast": True,
-                    "lift_coast_dist":20.0} # 200m ist je nach Kurve auch etwas viel
+                    "lift_coast_dist":50.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -429,7 +429,7 @@ def doit():
     # lift and coast not working properly     
     # plot longitudinal acceleration
     # plot resistance including rolling resistance
-    # plot power over time
+    # plot power over time plus and minus recuperation
     # add time-constant energy consumption, standby and cooling
 
 
