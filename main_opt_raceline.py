@@ -147,12 +147,12 @@ def main(track_pars: dict,
     # ------------------------------------------------------------------------------------------------------------------
 
     #use spline approximation to prepare centerline input
-    track_interp = tph.spline_approximation.spline_approximation(track=track_imp,
-                             stepsize_prep=stepsize_opts["stepsize_prep"],
-                             stepsize_reg=stepsize_opts["stepsize_reg"],
-                             k_reg=reg_smooth_opts["k_reg"],
-                             s_reg=reg_smooth_opts["s_reg"],
-                             debug=True)
+    # track_interp = tph.spline_approximation.spline_approximation(track=track_imp,
+    #                          stepsize_prep=stepsize_opts["stepsize_prep"],
+    #                          stepsize_reg=stepsize_opts["stepsize_reg"],
+    #                          k_reg=reg_smooth_opts["k_reg"],
+    #                          s_reg=reg_smooth_opts["s_reg"],
+    #                          debug=False)
 
     track_interp = track_imp
 
@@ -335,7 +335,7 @@ def doit():
     
     track_pars_ = {"location": "Leipzig",
                    "track_length": 3780.0,
-                   "track_width": 14.0}
+                   "track_width": 12.0}
 
     # track_pars_ = {"location": "IMS",
     #                "track_length": 4023.0,
@@ -440,8 +440,8 @@ def doit():
 
     imp_opts_ = {"mode": "centerline",
                  "flip_imp_track": False,
-                 "set_new_start": False,
-                 "new_start": [10.0, 0.0],
+                 "set_new_start": True,
+                 "new_start": [0.0, 0.0],
                  "plot_track": True}
 
     # spline regression smoothing options ------------------------------------------------------------------------------
@@ -449,7 +449,7 @@ def doit():
     # s_reg:    [-] smoothing factor -> range [1.0, 100.0] (play a little bit)
 
     reg_smooth_opts_ = {"k_reg": 3,
-                        "s_reg": 80.0}
+                        "s_reg": 50.0}
 
     # set stepsizes used during optimization ---------------------------------------------------------------------------
     # stepsize_prep:                [m] used for linear interpolation before spline approximation

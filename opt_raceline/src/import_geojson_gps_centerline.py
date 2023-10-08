@@ -120,20 +120,27 @@ def import_geojson_gps_centerline(trackfilepath: str,
     # create textbox to be able to get ID of start element from the user
     ax_textbox = plt.axes([0.84, 0.82, 0.05, 0.05])
     text_box = TextBox(ax_textbox, 'Set start ID to:', initial='0')
-
+    fig = plt.figure(figsize=(10, 8))
     # connect to canvas to be able to pick within plot
     fig.canvas.mpl_connect('pick_event', lambda event: __onpick(event=event,
                                                                 elements=elements,
                                                                 fig_handle=fig))
 
+    # bigger plot window
+    
     plt.show()
+
+
+ 
+
+
 
     # ------------------------------------------------------------------------------------------------------------------
     # PLOT IS NOW CLOSED -----------------------------------------------------------------------------------------------
     # ------------------------------------------------------------------------------------------------------------------
 
     # get start ID from textbox
-    id_start = int(text_box.text)
+    id_start =  int(input("Please enter a section to start: ")) # int(text_box.text)
 
     # create bool array containing which sections are active after plot was closed
     act_secs = np.full(len(gps_data_xy), False)

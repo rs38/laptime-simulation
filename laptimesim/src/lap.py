@@ -659,6 +659,7 @@ class Lap(object):
                     f_x_powert = f_x_requ + f_x_resi
 
                     # check for the two cases "engine demanded" and "engine not demanded"
+                    timespan = self.t_cl[k + 1] - self.t_cl[k]
                     if f_x_powert > 0.0:
                         """Engine demanded (this is the case if resistances must be overcome or if the car is
                         accelerating). Therefore, we have to recalculate the torque distribution and the energy storage
@@ -685,17 +686,17 @@ class Lap(object):
                                 % (self.m_requ[k] - (self.m_eng[k] + self.m_e_motor[k])))
 
                         # calculate energy recuperated during current step by el. turbocharger in [J] (only during acc.)
+                        timespan = self.t_cl[k + 1] - self.t_cl[k]
                         if self.driverobj.carobj.powertrain_type == "hybrid" and \
                                 self.driverobj.pars_driver["use_recuperation"]:
                             e_rec_etc = (self.driverobj.carobj.pars_engine["eta_etc_re"] * self.n_cl[k]
-                                         * self.m_eng[k] * 2 * math.pi * (self.t_cl[k + 1] - self.t_cl[k]))
+                                         * self.m_eng[k] * 2 * math.pi * timespan)
                         else:
                             e_rec_etc = 0.0
 
                         # calculate energy used by e motor during current step in [J]
                         e_cons_e_motor = (self.driverobj.carobj.power_demand_e_motor_drive(n=self.n_cl[k],
-                                                                                           m_e_motor=self.m_e_motor[k])
-                                          * (self.t_cl[k + 1] - self.t_cl[k]))
+                                                                                           m_e_motor=self.m_e_motor[k])  * timespan)
 
                         # calculate changes in the hybrid energy storage [J]
                         self.es_cl[k + 1] = self.es_cl[k] + e_rec_etc - e_cons_e_motor
@@ -713,11 +714,13 @@ class Lap(object):
                         # energy recuperation by e motor in [J] under the assumption of e motor being able to recuperate
                         # all kinetic energy remaining after subtraction of the resistances
                         # TODO: add recuperation maximum
+                        p_max_recu  = self.driverobj.carobj.pars_engine["pow_e_recu"]
 
-                        if np.sum(self.e_rec_e_motor) < self.e_rec_e_motor_max \
-                                and self.driverobj.pars_driver["use_recuperation"]:
+                        if  self.driverobj.pars_driver["use_recuperation"]: #np.sum(self.e_rec_e_motor) < self.e_rec_e_motor_max 
                             self.e_rec_e_motor[k] = (self.driverobj.carobj.pars_engine["eta_e_motor_re"]
                                                      * math.fabs(f_x_powert) * self.trackobj.stepsize)
+                            if self.e_rec_e_motor[k] / timespan > p_max_recu:
+                                self.e_rec_e_motor[k] = p_max_recu * timespan
 
                         else:
                             self.e_rec_e_motor[k] = 0.0
@@ -744,6 +747,8 @@ class Lap(object):
 
     def plot_lat_acc(self):
         a_y_tmp = np.power(self.vel_cl[:-1], 2) * self.trackobj.kappa
+        a_x_tmp = 10 * (self.vel_cl[1:] - self.vel_cl[:-1]) / self.trackobj.stepsize
+
         if self.pars_solver["series"] == "F1":
             a_y_valid = 50.0
         else:
@@ -752,6 +757,7 @@ class Lap(object):
         fig = plt.figure()
         ax = fig.add_subplot(111)
         plt.plot(self.trackobj.dists_cl[:-1], a_y_tmp)
+        plt.plot(self.trackobj.dists_cl[:-1], a_x_tmp)
         ax.axhline(y=-a_y_valid, color="k", linestyle="--", linewidth=3.0)  # valid lateral acceleration limit
         ax.axhline(y=a_y_valid, color="k", linestyle="--", linewidth=3.0)  # valid lateral acceleration limit
         ax.set_title("Lateral acceleration profile")
@@ -759,6 +765,8 @@ class Lap(object):
         ax.set_ylabel("lateral acceleration ay in m/s2")
         plt.grid()
         plt.show(block=False)
+
+
 
     def plot_torques(self):
         fig = plt.figure()
@@ -775,11 +783,18 @@ class Lap(object):
         plt.show(block=False)
 
         fig = plt.figure()
-        fig, ax = plt.subplots(figsize=(10, 10))
-        plt.plot(self.trackobj.dists_cl[:-1], self.power)
+        fig, ax = plt.subplots(figsize=(6, 6))
+        #plt.plot(self.trackobj.dists_cl[:-1], self.power)
+       
+        timespans = self.t_cl[1:]-self.t_cl[:-1]
+        powers = self.es_cl[1:] - self.es_cl[:-1]
+        kwatts = (powers / timespans)/1000
+        plt.plot( self.trackobj.dists_cl[1:] , kwatts, label="power")
+        #plt.plot( kwatts, label="power")
+
         ax.set_title("Power")
-        ax.set_xlabel("distance s in m")
-        ax.set_ylabel("power in W")
+        ax.set_xlabel("distance in m")
+        ax.set_ylabel("power in kW")
         plt.grid()
         plt.show(block=False)
 
