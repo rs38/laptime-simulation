@@ -502,21 +502,27 @@ class Lap(object):
                 # calculate time at start of next point
                 self.t_cl[i + 1] = self.t_cl[i] + 2 * self.trackobj.stepsize / (self.vel_cl[i] + self.vel_cl[i + 1])
 
+                timespan = self.t_cl[i + 1] - self.t_cl[i]
+
                 # calculate energy recuperated during current step by electric turbocharger in [J] (only during acc.)
                 if self.driverobj.carobj.powertrain_type == "hybrid" and self.driverobj.pars_driver["use_recuperation"]:
                     e_rec_etc = (self.driverobj.carobj.pars_engine["eta_etc_re"] * self.n_cl[i] * self.m_eng[i]
-                                 * 2 * math.pi * (self.t_cl[i + 1] - self.t_cl[i]))
+                                 * 2 * math.pi * timespan)
                 else:
                     e_rec_etc = 0.0
 
                 # calculate energy used by e motor during current step in [J]
                 e_cons_e_motor = (self.driverobj.carobj.power_demand_e_motor_drive(n=self.n_cl[i],
                                                                                    m_e_motor=self.m_e_motor[i])
-                                  * (self.t_cl[i + 1] - self.t_cl[i]))
+                                  * timespan)
 
                 # calculate changes in the hybrid energy storage [J]
+
+                e_standby = self.driverobj.carobj.pars_engine["pow_standby"] * timespan # E = P * t
+                
                 self.power[i] =  (e_rec_etc - e_cons_e_motor) /  (self.t_cl[i + 1] - self.t_cl[i])
-                self.es_cl[i + 1] = self.es_cl[i] + e_rec_etc - e_cons_e_motor
+                self.es_cl[i + 1] = self.es_cl[i] + e_rec_etc - e_cons_e_motor - e_standby
+                #print(f"{i},", end="")
 
                 if not self.driverobj.carobj.powertrain_type == "electric" and self.es_cl[i + 1] < 0.0:
                     self.es_cl[i + 1] = 0.0
@@ -660,6 +666,8 @@ class Lap(object):
 
                     # check for the two cases "engine demanded" and "engine not demanded"
                     timespan = self.t_cl[k + 1] - self.t_cl[k]
+                    e_standby = self.driverobj.carobj.pars_engine["pow_standby"] * timespan # E = P * t
+                   
                     if f_x_powert > 0.0:
                         """Engine demanded (this is the case if resistances must be overcome or if the car is
                         accelerating). Therefore, we have to recalculate the torque distribution and the energy storage
@@ -686,7 +694,7 @@ class Lap(object):
                                 % (self.m_requ[k] - (self.m_eng[k] + self.m_e_motor[k])))
 
                         # calculate energy recuperated during current step by el. turbocharger in [J] (only during acc.)
-                        timespan = self.t_cl[k + 1] - self.t_cl[k]
+                        
                         if self.driverobj.carobj.powertrain_type == "hybrid" and \
                                 self.driverobj.pars_driver["use_recuperation"]:
                             e_rec_etc = (self.driverobj.carobj.pars_engine["eta_etc_re"] * self.n_cl[k]
@@ -699,7 +707,8 @@ class Lap(object):
                                                                                            m_e_motor=self.m_e_motor[k])  * timespan)
 
                         # calculate changes in the hybrid energy storage [J]
-                        self.es_cl[k + 1] = self.es_cl[k] + e_rec_etc - e_cons_e_motor
+                        self.es_cl[k + 1] = self.es_cl[k] + e_rec_etc - e_cons_e_motor - e_standby
+                        #print(f"{k},")
 
                         if not self.driverobj.carobj.powertrain_type == "electric" and self.es_cl[k + 1] < 0.0:
                             self.es_cl[k + 1] = 0.0
@@ -726,7 +735,8 @@ class Lap(object):
                             self.e_rec_e_motor[k] = 0.0
 
                         # update energy storage (no energy harvested in el. turbocharger while engine is not demanded)
-                        self.es_cl[k + 1] = self.es_cl[k] + self.e_rec_e_motor[k]
+                        self.es_cl[k + 1] = self.es_cl[k] + self.e_rec_e_motor[k] - e_standby
+                        #print(f"{k},")
 
                 # reset longitudinal acceleration for next step (almost zero during maximum cornering)
                 a_x = 0.0
@@ -747,8 +757,7 @@ class Lap(object):
 
     def plot_lat_acc(self):
         a_y_tmp = np.power(self.vel_cl[:-1], 2) * self.trackobj.kappa
-        a_x_tmp = 10 * (self.vel_cl[1:] - self.vel_cl[:-1]) / self.trackobj.stepsize
-
+        a_x_tmp = (self.vel_cl[1:] - self.vel_cl[:-1]) / (self.t_cl[1:]-self.t_cl[:-1]) # v = ds/dt -> a = dv/dt 
         if self.pars_solver["series"] == "F1":
             a_y_valid = 50.0
         else:
@@ -885,7 +894,7 @@ class Lap(object):
         plt.grid()
 
         # plot global title
-        title = f"Lap Time: {self.t_cl[-1]:.2f} s, avg. speed: {np.mean(self.vel_cl) * 3.6:.1f} km/h"
+        title = f"Lap Time: {self.t_cl[-1]:.2f} s, avg. speed: {np.mean(self.vel_cl) * 3.6:.1f} / {3.6 * self.trackobj.dists_cl[-1]/ self.t_cl[-1]:.1f} km/h"
         plt.title(title)
 
         # --------------------------------------------------------------------------------------------------------------

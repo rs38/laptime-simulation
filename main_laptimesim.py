@@ -344,11 +344,11 @@ def main(track_opts: dict,
     # use_drs2:             DRS zone 2 switch
     # use_pit:              activate pit stop (requires _pit track file!)
 def doit():
-    track_opts_ = {"trackname": "Duisburg",
+    track_opts_ = {"trackname": "Hockenheim",
                    "flip_track": False,
-                   "mu_weather": 1.0,
-                   "interp_stepsize_des": 2.5,
-                   "curv_filt_width": 10.0,
+                   "mu_weather": 0.9,
+                   "interp_stepsize_des": 2.0,
+                   "curv_filt_width": 7.0,
                    "use_drs1": False,
                    "use_drs2": False,
                    "use_pit": False}
@@ -366,7 +366,7 @@ def doit():
     solver_opts_ = {"vehicle": "BEV_Taycan.ini",
                     "series": "FE",
                     "limit_braking_weak_side": 'all',
-                    "v_start": 120.0 / 3.6,
+                    "v_start": 40.0 / 3.6,
                     "find_v_start": True,
                     "max_no_em_iters": 10,
                     "es_diff_max": 1.0}
@@ -387,17 +387,17 @@ def doit():
     # use_lift_coast:   switch to turn lift and coast on/off
     # lift_coast_dist:  [m] lift and coast before braking point
 
-    driver_opts_ = {"vel_subtr_corner": 15/3.6,
-                    "vel_lim_glob": 120.0 /3.6,
+    driver_opts_ = {"vel_subtr_corner": 7/3.6,
+                    "vel_lim_glob": 165.0 /3.6,
                     "yellow_s1": True,
                     "yellow_s2": True,
                     "yellow_s3": True,
-                    "yellow_throttle": 0.5,
+                    "yellow_throttle": 0.6,
                     "initial_energy": 0.0e6,
                     "em_strategy": "FCFB",
                     "use_recuperation": True,
                     "use_lift_coast": True,
-                    "lift_coast_dist":50.0} # 200m ist je nach Kurve auch etwas viel
+                    "lift_coast_dist":110.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -418,7 +418,7 @@ def doit():
     # use_print_result:         set if result should be printed to console or not
 
     debug_opts_ = {"use_plot": True,
-                   "use_debug_plots": False,
+                   "use_debug_plots": True,
                    "use_plot_comparison_tph": False,
                    "use_print": True,
                    "use_print_result": True}
