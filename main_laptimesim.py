@@ -93,11 +93,9 @@ def main(track_opts: dict,
                 mapfilepath = os.path.join(mapfolderpath, mapfile)
                 break
 
-        # plot trackmap
-        track.plot_trackmap(mapfilepath=mapfilepath)
-
-        # plot curvature
-        #track.plot_curvature()
+        if debug_opts["use_track_plots"]:
+            track.plot_trackmap(mapfilepath=mapfilepath)
+            track.plot_curvature()
 
         # recalculate raceline based on curvature
         track.check_track()
@@ -117,7 +115,7 @@ def main(track_opts: dict,
         raise IOError("Unknown racing series!")
 
     # debug plot
-    if debug_opts["use_debug_plots"]:
+    if debug_opts["use_debug_plots"] and debug_opts["use_track_plots"]:
         # plot tire force potential characteristics
         car.plot_tire_characteristics()
 
@@ -125,19 +123,11 @@ def main(track_opts: dict,
         if car.powertrain_type == "combustion":
             car.plot_power_engine()
 
-    # ------------------------------------------------------------------------------------------------------------------
-    # CREATE DRIVER INSTANCE -------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
-
-    # create instance
+   
     driver = laptimesim.src.driver.Driver(carobj=car,
                                           pars_driver=driver_opts,
                                           trackobj=track,
                                           stepsize=track.stepsize)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    # CREATE LAP INSTANCE ----------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
 
     lap = laptimesim.src.lap.Lap(driverobj=driver,
                                  trackobj=track,
@@ -146,7 +136,6 @@ def main(track_opts: dict,
 
     # ------------------------------------------------------------------------------------------------------------------
     # CALL SOLVER ------------------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
 
     # save start time
     t_start = time.perf_counter()
@@ -158,21 +147,14 @@ def main(track_opts: dict,
 
         # debug plot
         if debug_opts["use_debug_plots"]:
-            # plot torques
-            lap.plot_torques()
+            
+            if debug_opts["use_track_plots"]:
+                lap.plot_torques()
+                lap.plot_tire_loads()
+                lap.plot_enginespeed_gears()
 
-            # plot lateral acceleration profile
             lap.plot_lat_acc()
-            #lap.plot_long_acc()
-
-            # plot tire load profile
-            lap.plot_tire_loads()
-
-            # plot aero forces
             lap.plot_aero_forces()
-
-            # plot engine speed and gear selection
-            lap.plot_enginespeed_gears()
 
     else:
         # sensitivity analysis -----------------------------------------------------------------------------------------
@@ -272,8 +254,7 @@ def main(track_opts: dict,
 
     # ------------------------------------------------------------------------------------------------------------------
     # PLOTS ------------------------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
-
+   
     if not sa_opts["use_sa"]:
         if debug_opts["use_plot"]:
             lap.plot_overview()
@@ -343,112 +324,106 @@ def main(track_opts: dict,
     # use_drs1:             DRS zone 1 switch
     # use_drs2:             DRS zone 2 switch
     # use_pit:              activate pit stop (requires _pit track file!)
-def doit():
-    track_opts_ = {"trackname": "Hockenheim",
-                   "flip_track": False,
-                   "mu_weather": 0.9,
-                   "interp_stepsize_des": 2.0,
-                   "curv_filt_width": 7.0,
-                   "use_drs1": False,
-                   "use_drs2": False,
-                   "use_pit": False}
 
-    # solver options ---------------------------------------------------------------------------------------------------
-    # vehicle:                  vehicle parameter file
-    # series:                   F1, FE
-    # limit_braking_weak_side:  can be None, 'FA', 'RA', 'all' -> set if brake force potential should be determined
-    #                           based on the weak (i.e. inner) side of the car, e.g. when braking into a corner
-    # v_start:                  [m/s] velocity at start
-    # find_v_start:             determine the real velocity at start
-    # max_no_em_iters:          maximum number of iterations for EM recalculation
-    # es_diff_max:              [J] stop criterion -> maximum difference between two solver runs
+track_opts_ = {"trackname": "Leipzig",
+                "flip_track": True,
+                "mu_weather": 0.9,
+                "interp_stepsize_des": 5.0,
+                "curv_filt_width": 7.0,
+                "use_drs1": False,
+                "use_drs2": False,
+                "use_pit": False}
 
-    solver_opts_ = {"vehicle": "BEV_Taycan.ini",
-                    "series": "FE",
-                    "limit_braking_weak_side": 'all',
-                    "v_start": 40.0 / 3.6,
-                    "find_v_start": True,
-                    "max_no_em_iters": 10,
-                    "es_diff_max": 1.0}
+# solver options ---------------------------------------------------------------------------------------------------
+# vehicle:                  vehicle parameter file
+# series:                   F1, FE
+# limit_braking_weak_side:  can be None, 'FA', 'RA', 'all' -> set if brake force potential should be determined
+#                           based on the weak (i.e. inner) side of the car, e.g. when braking into a corner
+# v_start:                  [m/s] velocity at start
+# find_v_start:             determine the real velocity at start
+# max_no_em_iters:          maximum number of iterations for EM recalculation
+# es_diff_max:              [J] stop criterion -> maximum difference between two solver runs
 
-    # driver options ---------------------------------------------------------------------------------------------------
-    # vel_subtr_corner: [m/s] velocity subtracted from max. cornering vel. since drivers will not hit the maximum
-    #                   perfectly
-    # vel_lim_glob:     [m/s] velocity limit, set None if unused
-    # yellow_s1:        yellow flag in sector 1
-    # yellow_s2:        yellow flag in sector 2
-    # yellow_s3:        yellow flag in sector 3
-    # yellow_throttle:  throttle position in a yellow flag sector
-    # initial_energy:   [J] initial energy (F1: max. 4 MJ/lap, FE Berlin: 4.58 MJ/lap)
-    # em_strategy:      FCFB, LBP, LS, NONE -> FCFB = First Come First Boost, LBP = Longest (time) to Breakpoint,
-    #                   LS = Lowest Speed, FE requires FCFB as it only drives in electric mode!
-    # use_recuperation: set if recuperation by e-motor and electric turbocharger is allowed or not (lift&coast is
-    #                   currently only considered with FCFB)
-    # use_lift_coast:   switch to turn lift and coast on/off
-    # lift_coast_dist:  [m] lift and coast before braking point
+solver_opts_ = {"vehicle": "FE_Berlin.ini",
+                "series": "FE",
+                "limit_braking_weak_side": 'all',
+                "v_start": 90.0 / 3.6,
+                "find_v_start": True,
+                "max_no_em_iters": 10,
+                "es_diff_max": 1.0}
 
-    driver_opts_ = {"vel_subtr_corner": 7/3.6,
-                    "vel_lim_glob": 165.0 /3.6,
-                    "yellow_s1": True,
-                    "yellow_s2": True,
-                    "yellow_s3": True,
-                    "yellow_throttle": 0.6,
-                    "initial_energy": 0.0e6,
-                    "em_strategy": "FCFB",
-                    "use_recuperation": True,
-                    "use_lift_coast": True,
-                    "lift_coast_dist":110.0} # 200m ist je nach Kurve auch etwas viel
+# driver options ---------------------------------------------------------------------------------------------------
+# vel_subtr_corner: [m/s] velocity subtracted from max. cornering vel. since drivers will not hit the maximum
+#                   perfectly
+# vel_lim_glob:     [m/s] velocity limit, set None if unused
+# yellow_s1:        yellow flag in sector 1
+# yellow_s2:        yellow flag in sector 2
+# yellow_s3:        yellow flag in sector 3
+# yellow_throttle:  throttle position in a yellow flag sector
+# initial_energy:   [J] initial energy (F1: max. 4 MJ/lap, FE Berlin: 4.58 MJ/lap)
+# em_strategy:      FCFB, LBP, LS, NONE -> FCFB = First Come First Boost, LBP = Longest (time) to Breakpoint,
+#                   LS = Lowest Speed, FE requires FCFB as it only drives in electric mode!
+# use_recuperation: set if recuperation by e-motor and electric turbocharger is allowed or not (lift&coast is
+#                   currently only considered with FCFB)
+# use_lift_coast:   switch to turn lift and coast on/off
+# lift_coast_dist:  [m] lift and coast before braking point
 
-    # sensitivity analysis options -------------------------------------------------------------------------------------
-    # use_sa:   switch to deactivate sensitivity analysis
-    # sa_type:  'mass', 'aero', 'cog'
-    # range_1:  range of parameter variation [start, end, number of steps]
-    # range_2:  range of parameter variation [start, end, number of steps] -> CURRENTLY NOT IMPLEMENTED
+driver_opts_ = {"vel_subtr_corner": 7/3.6,
+                "vel_lim_glob": 165.0 /3.6,
+                "yellow_s1": True,
+                "yellow_s2": True,
+                "yellow_s3": True,
+                "yellow_throttle": 0.6,
+                "initial_energy": 0.0e6,
+                "em_strategy": "FCFB",
+                "use_recuperation": True,
+                "use_lift_coast": True,
+                "lift_coast_dist":110.0} # 200m ist je nach Kurve auch etwas viel
 
-    sa_opts_ = {"use_sa": False,
-                "sa_type": "mass",
-                "range_1": [2380.0, 2460.0, 5],
-                "range_2": None}
+# sensitivity analysis options -------------------------------------------------------------------------------------
+# use_sa:   switch to deactivate sensitivity analysis
+# sa_type:  'mass', 'aero', 'cog'
+# range_1:  range of parameter variation [start, end, number of steps]
+# range_2:  range of parameter variation [start, end, number of steps] -> CURRENTLY NOT IMPLEMENTED
 
-    # debug options ----------------------------------------------------------------------------------------------------
-    # use_plot:                 plot results
-    # use_debug_plots:          plot additional plots for debugging
-    # use_plot_comparison_tph:  calculate velocity profile with TPH FB solver and plot a comparison
-    # use_print:                set if prints to console should be used or not (does not suppress hints/warnings)
-    # use_print_result:         set if result should be printed to console or not
+sa_opts_ = {"use_sa": False,
+            "sa_type": "mass",
+            "range_1": [2380.0, 2460.0, 5],
+            "range_2": None}
 
-    debug_opts_ = {"use_plot": True,
-                   "use_debug_plots": True,
-                   "use_plot_comparison_tph": False,
-                   "use_print": True,
-                   "use_print_result": True}
-    
-    # ###  todo list:
-    # 
-    # limit only recuperation power to xy kw
-    # lift and coast not working properly     
-    # plot longitudinal acceleration
-    # plot resistance including rolling resistance
-    # plot power over time plus and minus recuperation
-    # add time-constant energy consumption, standby and cooling
+# debug options ----------------------------------------------------------------------------------------------------
+# use_plot:                 plot results
+# use_debug_plots:          plot additional plots for debugging
+# use_plot_comparison_tph:  calculate velocity profile with TPH FB solver and plot a comparison
+# use_print:                set if prints to console should be used or not (does not suppress hints/warnings)
+# use_print_result:         set if result should be printed to console or not
 
+debug_opts_ = {"use_plot": False,
+                "use_debug_plots": True,
+                "use_track_plots": False,
+                "use_plot_comparison_tph": False,
+                "use_print": True,
+                "use_print_result": True}
 
+# ###  todo list:
+# 
+# plot resistance including rolling resistance
+# lift and coast not working properly     
 
+# (x) plot longitudinal acceleration
+# (x) limit only recuperation power to xy kw
+# (x) plot power over time plus and minus recuperation
+# (x) add time-constant energy consumption, standby and cooling
 
+# SIMULATION CALL -----------------------------------------
 
-    # ------------------------------------------------------------------------------------------------------------------
-    # SIMULATION CALL --------------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
+start_time = time.time()
 
-    start_time = time.time()
+main(track_opts=track_opts_,
+        solver_opts=solver_opts_,
+        driver_opts=driver_opts_,
+        sa_opts=sa_opts_,
+        debug_opts=debug_opts_)
 
-    main(track_opts=track_opts_,
-         solver_opts=solver_opts_,
-         driver_opts=driver_opts_,
-         sa_opts=sa_opts_,
-         debug_opts=debug_opts_)
-    
-    print(f"Runtime: {time.time() - start_time:.2f} seconds")
+print(f"Runtime: {time.time() - start_time:.2f} seconds")
 
-if __name__ == '__main__':
-    doit()

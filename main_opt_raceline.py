@@ -147,12 +147,12 @@ def main(track_pars: dict,
     # ------------------------------------------------------------------------------------------------------------------
 
     #use spline approximation to prepare centerline input
-    # track_interp = tph.spline_approximation.spline_approximation(track=track_imp,
-    #                          stepsize_prep=stepsize_opts["stepsize_prep"],
-    #                          stepsize_reg=stepsize_opts["stepsize_reg"],
-    #                          k_reg=reg_smooth_opts["k_reg"],
-    #                          s_reg=reg_smooth_opts["s_reg"],
-    #                          debug=False)
+    track_interp = tph.spline_approximation.spline_approximation(track=track_imp,
+                             stepsize_prep=stepsize_opts["stepsize_prep"],
+                             stepsize_reg=stepsize_opts["stepsize_reg"],
+                             k_reg=reg_smooth_opts["k_reg"],
+                             s_reg=reg_smooth_opts["s_reg"],
+                             debug=False)
 
     track_interp = track_imp
 
@@ -335,7 +335,7 @@ def doit():
     
     track_pars_ = {"location": "Leipzig",
                    "track_length": 3780.0,
-                   "track_width": 12.0}
+                   "track_width": 8.0}
 
     # track_pars_ = {"location": "IMS",
     #                "track_length": 4023.0,
@@ -439,8 +439,8 @@ def doit():
 
 
     imp_opts_ = {"mode": "centerline",
-                 "flip_imp_track": False,
-                 "set_new_start": True,
+                 "flip_imp_track": True,
+                 "set_new_start": False,
                  "new_start": [0.0, 0.0],
                  "plot_track": True}
 
@@ -449,14 +449,14 @@ def doit():
     # s_reg:    [-] smoothing factor -> range [1.0, 100.0] (play a little bit)
 
     reg_smooth_opts_ = {"k_reg": 3,
-                        "s_reg": 50.0}
+                        "s_reg": 40.0}
 
     # set stepsizes used during optimization ---------------------------------------------------------------------------
     # stepsize_prep:                [m] used for linear interpolation before spline approximation
     # stepsize_reg:                 [m] used for spline interpolation after spline approximation (stepsize during opt.)
     # stepsize_interp_after_opt:    [m] used for spline interpolation after optimization
 
-    stepsize_opts_ = {"stepsize_prep": 2.0,
+    stepsize_opts_ = {"stepsize_prep": 4.0,
                       "stepsize_reg": 5.0,
                       "stepsize_interp_after_opt": 5.0}
 
@@ -466,7 +466,7 @@ def doit():
     # iqp_iters_min:            [-] minimum number of iterations for the IQP
     # iqp_curverror_allowed:    [rad/m] maximum allowed curvature error for the IQP
 
-    optim_opts_mincurv_ = {"width_opt": 1.8,
+    optim_opts_mincurv_ = {"width_opt": 1.5,
                            "curvlim": 0.12,
                            "iqp_iters_min": 3,
                            "iqp_curverror_allowed": 0.01}

@@ -4,32 +4,8 @@ import matplotlib.pyplot as plt
 from laptimesim.src.track import Track
 from laptimesim.src.driver import Driver
 
-from dataclasses import dataclass
-
-@dataclass(slots=True)
 class Lap(object):
-    driverobj: Driver
-    trackobj: Track
-    pars_solver: dict
-    debug_opts: dict
-    t_cl: np.ndarray 
-    vel_cl: np.ndarray 
-    n_cl: np.ndarray 
-    m_eng: np.ndarray 
-    m_e_motor: np.ndarray 
-    m_requ: np.ndarray 
-    power: np.ndarray 
-    es_cl: np.ndarray 
-    gear_cl: np.ndarray 
-    e_rec_e_motor: np.ndarray 
-    a_x_final: float = 0.0
-    e_rec_e_motor_max: float = 0.0
-    fuel_cons_cl: np.ndarray 
-    e_cons_cl: np.ndarray 
-    tire_loads: np.ndarray
-    e_es_to_e_motor_max: float = 0.0
-
-      
+     
     """
     author:
     Alexander Heilmeier (based on the term thesis of Maximilian Geisslinger)
@@ -45,35 +21,35 @@ class Lap(object):
     start velocity. This has to be ensured by re-running the solver a second time.
     """
 
-    # __slots__ = ("__driverobj",
-    #              "__trackobj",
-    #              "__t_cl",
-    #              "__vel_cl",
-    #              "__n_cl",
-    #              "__m_eng",
-    #              "__m_e_motor",
-    #              "__m_requ",
-    #              "__power",
-    #              "__es_cl",
-    #              "__gear_cl",
-    #              "__e_rec_e_motor",
-    #              "__a_x_final",
-    #              "__e_rec_e_motor_max",
-    #              "__pars_solver",
-    #              "__debug_opts",
-    #              "__fuel_cons_cl",
-    #              "__e_cons_cl",
-    #              "__tire_loads",
-    #              "__e_es_to_e_motor_max")
+    __slots__ = ("__driverobj",
+                 "__trackobj",
+                 "__t_cl",
+                 "__vel_cl",
+                 "__n_cl",
+                 "__m_eng",
+                 "__m_e_motor",
+                 "__m_requ",
+                 "__power",
+                 "__es_cl",
+                 "__gear_cl",
+                 "__e_rec_e_motor",
+                 "__a_x_final",
+                 "__e_rec_e_motor_max",
+                 "__pars_solver",
+                 "__debug_opts",
+                 "__fuel_cons_cl",
+                 "__e_cons_cl",
+                 "__tire_loads",
+                 "__e_es_to_e_motor_max")
 
     # ------------------------------------------------------------------------------------------------------------------
     # CONSTRUCTOR ------------------------------------------------------------------------------------------------------
     # ------------------------------------------------------------------------------------------------------------------
 
 
-    def __post_init__(self):
-        #def __init__(self, driverobj: Driver, trackobj: Track, pars_solver: dict, debug_opts: dict):
-        trackobj = self.trackobj
+   
+    def __init__(self, driverobj: Driver, trackobj: Track, pars_solver: dict, debug_opts: dict):
+      
 
         # adjust solver parameters
         if self.trackobj.pars_track["use_pit"]:
@@ -1028,6 +1004,9 @@ class Lap(object):
         ax2.set_ylabel("gear")
 
         fig.tight_layout()
+        #save plt as png with high dpi
+
+        plt.savefig("overview.png", dpi=300)
         plt.show()
 
 
