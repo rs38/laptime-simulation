@@ -48,7 +48,7 @@ def main(track_pars: dict,
             line = fh.readline()
 
     # check dependencies
-    pkg_resources.require(dependencies)
+    # pkg_resources.require(dependencies)
 
     # ------------------------------------------------------------------------------------------------------------------
     # CHECK USER INPUT -------------------------------------------------------------------------------------------------
@@ -312,9 +312,9 @@ if __name__ == '__main__':
 
     # F1 ---------------------------------------------------------------------------------------------------------------
 
-    track_pars_ = {"location": "Austin",
-                   "track_length": 5513.0,
-                   "track_width": None}
+    track_pars_ = {"location": "Leipzig",
+                   "track_length": 3700.0,
+                   "track_width": 10}
 
     # track_pars_ = {"location": "Budapest",
     #                "track_length": 4381.0,
@@ -429,7 +429,7 @@ if __name__ == '__main__':
     # new_start:        [x_m, y_m] coordinates of new starting point
     # plot_track:       plot imported as well as smoothed track
 
-    imp_opts_ = {"mode": "track",
+    imp_opts_ = {"mode": "centerline",
                  "flip_imp_track": False,
                  "set_new_start": True,
                  "new_start": [0.0, 0.0],

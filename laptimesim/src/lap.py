@@ -947,6 +947,7 @@ class Lap(object):
 
         # set tight plot layout and show plot
         plt.tight_layout()
+        plt.savefig("overview.png",dpi=400 )
         plt.show()
 
         # reset font size

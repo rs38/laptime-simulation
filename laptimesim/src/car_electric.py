@@ -3,7 +3,7 @@ import math
 import json
 from laptimesim.src.car import Car
 import configparser
-
+import re
 
 class CarElectric(Car):
     """
@@ -35,7 +35,10 @@ class CarElectric(Car):
         if not parser.read(parfilepath):
             raise RuntimeError('Specified config file does not exist or is empty!')
 
-        pars_veh_tmp = json.loads(parser.get('VEH_PARS', 'veh_pars'))
+        # remove comments from JSON
+        pars_veh_str = re.sub(r'(?<!\\)#.*', '', parser.get('VEH_PARS', 'veh_pars'))
+        pars_veh_tmp = json.loads(pars_veh_str)
+
 
         # unit conversions
         for i, item in enumerate(pars_veh_tmp["gearbox"]["n_shift"]):

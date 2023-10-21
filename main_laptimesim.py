@@ -51,7 +51,7 @@ def main(track_opts: dict,
             line = fh.readline()
 
     # check dependencies
-    pkg_resources.require(dependencies)
+    # pkg_resources.require(dependencies)
 
     # ------------------------------------------------------------------------------------------------------------------
     # INITIALIZATION ---------------------------------------------------------------------------------------------------
@@ -358,10 +358,10 @@ if __name__ == '__main__':
     # use_drs2:             DRS zone 2 switch
     # use_pit:              activate pit stop (requires _pit track file!)
 
-    track_opts_ = {"trackname": "Shanghai",
-                   "flip_track": False,
+    track_opts_ = {"trackname": "Leipzig",
+                   "flip_track": True,
                    "mu_weather": 1.0,
-                   "interp_stepsize_des": 5.0,
+                   "interp_stepsize_des": 3.0,
                    "curv_filt_width": 10.0,
                    "use_drs1": True,
                    "use_drs2": True,
@@ -377,10 +377,10 @@ if __name__ == '__main__':
     # max_no_em_iters:          maximum number of iterations for EM recalculation
     # es_diff_max:              [J] stop criterion -> maximum difference between two solver runs
 
-    solver_opts_ = {"vehicle": "F1_Shanghai.ini",
-                    "series": "F1",
-                    "limit_braking_weak_side": 'FA',
-                    "v_start": 100.0 / 3.6,
+    solver_opts_ = {"vehicle": "BEV_Taycan.ini",
+                    "series": "FE",
+                    "limit_braking_weak_side": 'all',
+                    "v_start": 130.0 / 3.6,
                     "find_v_start": True,
                     "max_no_em_iters": 5,
                     "es_diff_max": 1.0}
@@ -401,8 +401,8 @@ if __name__ == '__main__':
     # use_lift_coast:   switch to turn lift and coast on/off
     # lift_coast_dist:  [m] lift and coast before braking point
 
-    driver_opts_ = {"vel_subtr_corner": 0.5,
-                    "vel_lim_glob": None,
+    driver_opts_ = {"vel_subtr_corner": 1.5,
+                    "vel_lim_glob": 150.0/3.6,
                     "yellow_s1": False,
                     "yellow_s2": False,
                     "yellow_s3": False,
@@ -410,8 +410,8 @@ if __name__ == '__main__':
                     "initial_energy": 4.0e6,
                     "em_strategy": "FCFB",
                     "use_recuperation": True,
-                    "use_lift_coast": False,
-                    "lift_coast_dist": 10.0}
+                    "use_lift_coast": True,
+                    "lift_coast_dist": 60.0}
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -431,7 +431,7 @@ if __name__ == '__main__':
     # use_print:                set if prints to console should be used or not (does not suppress hints/warnings)
     # use_print_result:         set if result should be printed to console or not
 
-    debug_opts_ = {"use_plot": False,
+    debug_opts_ = {"use_plot": True,
                    "use_debug_plots": False,
                    "use_plot_comparison_tph": False,
                    "use_print": True,
