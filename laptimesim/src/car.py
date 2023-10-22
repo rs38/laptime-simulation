@@ -215,7 +215,7 @@ class Car(object):
         plt.ylabel("Forces F_x and F_y in N")
         plt.legend(["F_x front", "F_y front", "F_x rear", "F_y rear"])
 
-        plt.show()
+        plt.show(block=False)
 
     def __circumref_driven_tire(self, vel: float) -> float:
         """Velocity input in m/s. Reference speed for the circumreference calculation is 60 km/h. Output is in m."""

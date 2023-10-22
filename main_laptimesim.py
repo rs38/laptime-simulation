@@ -3,7 +3,6 @@ import time
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-import pkg_resources
 import pickle
 
 """
@@ -11,7 +10,7 @@ author:
 Alexander Heilmeier (based on the term thesis of Maximilian Geisslinger)
 
 date:
-23.12.2018
+22.10.2023
 
 .. description::
 The file contains the script to run the lap time simulation starting with the import of various parameters and ending
@@ -32,26 +31,9 @@ def main(track_opts: dict,
          sa_opts: dict,
          debug_opts: dict) -> laptimesim.src.lap.Lap:
 
-    # ------------------------------------------------------------------------------------------------------------------
-    # CHECK PYTHON DEPENDENCIES ----------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
-
     # get repo path
     repo_path = os.path.dirname(os.path.abspath(__file__))
 
-    # read dependencies from requirements.txt
-    requirements_path = os.path.join(repo_path, 'requirements.txt')
-    dependencies = []
-
-    with open(requirements_path, 'r') as fh:
-        line = fh.readline()
-
-        while line:
-            dependencies.append(line.rstrip())
-            line = fh.readline()
-
-    # check dependencies
-    # pkg_resources.require(dependencies)
 
     # ------------------------------------------------------------------------------------------------------------------
     # INITIALIZATION ---------------------------------------------------------------------------------------------------
@@ -111,11 +93,9 @@ def main(track_opts: dict,
                 mapfilepath = os.path.join(mapfolderpath, mapfile)
                 break
 
-        # plot trackmap
-        track.plot_trackmap(mapfilepath=mapfilepath)
-
-        # plot curvature
-        track.plot_curvature()
+        if debug_opts["use_track_plots"]:
+            track.plot_trackmap(mapfilepath=mapfilepath)
+            track.plot_curvature()
 
         # recalculate raceline based on curvature
         track.check_track()
@@ -135,7 +115,7 @@ def main(track_opts: dict,
         raise IOError("Unknown racing series!")
 
     # debug plot
-    if debug_opts["use_debug_plots"]:
+    if debug_opts["use_debug_plots"] and debug_opts["use_track_plots"]:
         # plot tire force potential characteristics
         car.plot_tire_characteristics()
 
@@ -143,19 +123,11 @@ def main(track_opts: dict,
         if car.powertrain_type == "combustion":
             car.plot_power_engine()
 
-    # ------------------------------------------------------------------------------------------------------------------
-    # CREATE DRIVER INSTANCE -------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
-
-    # create instance
+   
     driver = laptimesim.src.driver.Driver(carobj=car,
                                           pars_driver=driver_opts,
                                           trackobj=track,
                                           stepsize=track.stepsize)
-
-    # ------------------------------------------------------------------------------------------------------------------
-    # CREATE LAP INSTANCE ----------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
 
     lap = laptimesim.src.lap.Lap(driverobj=driver,
                                  trackobj=track,
@@ -176,8 +148,11 @@ def main(track_opts: dict,
 
         # debug plot
         if debug_opts["use_debug_plots"]:
-            # plot torques
-            lap.plot_torques()
+            
+            if debug_opts["use_track_plots"]:
+                lap.plot_torques()
+                lap.plot_tire_loads()
+                lap.plot_enginespeed_gears()
 
             # plot lateral acceleration profile
             lap.plot_lat_acc()
@@ -219,7 +194,7 @@ def main(track_opts: dict,
                 # simulate lap and save lap time
                 lap.simulate_lap()
                 sa_t_lap[i] = lap.t_cl[-1]
-                sa_fuel_cons[i] = lap.fuel_cons_cl[-1]
+                sa_fuel_cons[i] = lap.es_cl[-1]
 
                 # reset lap
                 lap.reset_lap()
@@ -253,8 +228,11 @@ def main(track_opts: dict,
         v_tmp = (lap.vel_cl[0] - lap.vel_cl[-1]) * 3.6
         print("Delta: %.1f km/h" % v_tmp)
         print("-" * 50)
-        print("Consumption: %.2f kg/lap | %.2f kJ/lap" % (lap.fuel_cons_cl[-1], lap.e_cons_cl[-1] / 1000.0))
-        # [J] -> [kJ]
+        print("Length of lap: %.2f km" % (lap.trackobj.dists_cl[-1] /1000 ))
+        print("Average velocity: %.2f km/h" % (lap.trackobj.dists_cl[-1] / lap.t_cl[-1] * 3.6))
+        print("Consumption with and without regen: %.2f kJ/lap | %.2f kJ/lap" % (lap.es_cl[-1]/-1000.0, lap.e_cons_cl[-1] / 1000.0)) # [J] -> [kJ]
+        print("Consumption with and without regen: %.2f kWh/lap | %.2f kWh/lap" % (lap.es_cl[-1]/-3600000, lap.e_cons_cl[-1] / 3600000.0)) # [J] -> [kJ]
+        print("Consumption avg: %.2f kWh/100km" % (lap.es_cl[-1] / 3600000.0 / (lap.trackobj.dists_cl[-1] / 1000.0) * -100.0)) 
         print("-" * 50)
 
     elif debug_opts["use_print_result"]:
@@ -269,7 +247,7 @@ def main(track_opts: dict,
             fuel_cons_diff = sa_fuel_cons[-1] - sa_fuel_cons[0]
 
             print("Average sensitivity of lap time to mass: %.3f s/kg" % (t_lap_diff / m_diff))
-            print("Average sensitivity of fuel consumption to mass: %.5f kg/kg" % (fuel_cons_diff / m_diff))
+            print("Average sensitivity of fuel consumption to mass: %.5f kWh/kg" % (fuel_cons_diff /( m_diff * -3600000)))   
             print("-" * 50)
 
         else:
@@ -382,7 +360,7 @@ if __name__ == '__main__':
                     "limit_braking_weak_side": 'all',
                     "v_start": 130.0 / 3.6,
                     "find_v_start": True,
-                    "max_no_em_iters": 5,
+                    "max_no_em_iters": 10,
                     "es_diff_max": 1.0}
 
     # driver options ---------------------------------------------------------------------------------------------------
@@ -401,17 +379,17 @@ if __name__ == '__main__':
     # use_lift_coast:   switch to turn lift and coast on/off
     # lift_coast_dist:  [m] lift and coast before braking point
 
-    driver_opts_ = {"vel_subtr_corner": 1.5,
-                    "vel_lim_glob": 150.0/3.6,
-                    "yellow_s1": False,
-                    "yellow_s2": False,
-                    "yellow_s3": False,
-                    "yellow_throttle": 0.3,
-                    "initial_energy": 4.0e6,
-                    "em_strategy": "FCFB",
-                    "use_recuperation": True,
-                    "use_lift_coast": True,
-                    "lift_coast_dist": 60.0}
+driver_opts_ = {"vel_subtr_corner": 7/3.6,
+                "vel_lim_glob": 165.0 /3.6,
+                "yellow_s1": True,
+                "yellow_s2": True,
+                "yellow_s3": True,
+                "yellow_throttle": 1.0,
+                "initial_energy": 0.0e6,
+                "em_strategy": "FCFB",
+                "use_recuperation": True,
+                "use_lift_coast": True,
+                "lift_coast_dist":110.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -419,10 +397,10 @@ if __name__ == '__main__':
     # range_1:  range of parameter variation [start, end, number of steps]
     # range_2:  range of parameter variation [start, end, number of steps] -> CURRENTLY NOT IMPLEMENTED
 
-    sa_opts_ = {"use_sa": False,
-                "sa_type": "mass",
-                "range_1": [733.0, 833.0, 5],
-                "range_2": None}
+sa_opts_ = {"use_sa": False,
+            "sa_type": "mass",
+            "range_1": [2380.0, 2460.0, 5],
+            "range_2": None}
 
     # debug options ----------------------------------------------------------------------------------------------------
     # use_plot:                 plot results
@@ -431,18 +409,31 @@ if __name__ == '__main__':
     # use_print:                set if prints to console should be used or not (does not suppress hints/warnings)
     # use_print_result:         set if result should be printed to console or not
 
-    debug_opts_ = {"use_plot": True,
-                   "use_debug_plots": False,
-                   "use_plot_comparison_tph": False,
-                   "use_print": True,
-                   "use_print_result": True}
+debug_opts_ = {"use_plot": True,
+                "use_debug_plots": True,
+                "use_track_plots": False,
+                "use_plot_comparison_tph": False,
+                "use_print": True,
+                "use_print_result": True}
 
-    # ------------------------------------------------------------------------------------------------------------------
-    # SIMULATION CALL --------------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
+# ###  todo list:
+# 
+# plot resistance including rolling resistance
+# lift and coast not working properly     
 
-    main(track_opts=track_opts_,
+# (x) plot longitudinal acceleration
+# (x) limit only recuperation power to xy kw
+# (x) plot power over time plus and minus recuperation
+# (x) add time-constant energy consumption, standby and cooling
+
+# SIMULATION CALL -----------------------------------------
+
+start_time = time.time()
+
+main(track_opts=track_opts_,
          solver_opts=solver_opts_,
          driver_opts=driver_opts_,
          sa_opts=sa_opts_,
          debug_opts=debug_opts_)
+
+print(f"Runtime: {time.time() - start_time:.2f} seconds")

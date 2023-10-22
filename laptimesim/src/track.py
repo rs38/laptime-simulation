@@ -405,7 +405,7 @@ class Track(object):
         plt.ylabel("y in m")
         plt.legend(["Original raceline", "Recalculated raceline"])
 
-        plt.show()
+        plt.show(block=False)
 
     def plot_curvature(self):
         fig = plt.figure()
