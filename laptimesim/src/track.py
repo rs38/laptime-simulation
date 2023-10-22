@@ -139,65 +139,6 @@ class Track(object):
 
     # ------------------------------------------------------------------------------------------------------------------
     # METHODS (CALCULATIONS) -------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
-
-    """The following functions contain the code required for linear interpolation and numerical curvature calculation.
-    Due to the better approximation by splines they were replaced and are therefore not used anymore."""
-
-    # def __calc_dists_cl(self) -> np.ndarray:
-    #     """Raceline is an array containing unclosed x and y coords: [x, y]. Output is in m. The distances are returned
-    #     for a closed track."""
-    #
-    #     raceline_cl = np.vstack((self.raceline, self.raceline[0, :]))
-    #     dists_cl_tmp = np.cumsum(np.sqrt(np.power(np.diff(raceline_cl[:, 0]), 2)
-    #                                      + np.power(np.diff(raceline_cl[:, 1]), 2)))
-    #     dists_cl_tmp = np.insert(dists_cl_tmp, 0, 0.0)
-    #
-    #     return dists_cl_tmp
-    #
-    # def __interp_raceline(self) -> None:
-    #     """
-    #     Raceline is an unclosed array containing x and y coords: [x, y], stepsize_des is the desired stepsize after
-    #     interpolation. Returns the unclosed raceline, the closed distances to every point, the stepsize after
-    #     interpolation and the number of points (unclosed) after interpolation.
-    #     """
-    #
-    #     dists_cl_preinterp = self.__calc_dists_cl()
-    #     no_points = int(np.round(dists_cl_preinterp[-1] / self.pars_track["interp_stepsize_des"]))
-    #     self.stepsize = dists_cl_preinterp[-1] / no_points
-    #     dists_cl = np.arange(0, no_points + 1) * self.stepsize
-    #
-    #     raceline_preinterp_cl = np.vstack((self.raceline, self.raceline[0, :]))
-    #     x_interp_cl = np.interp(dists_cl, dists_cl_preinterp, raceline_preinterp_cl[:, 0])
-    #     y_interp_cl = np.interp(dists_cl, dists_cl_preinterp, raceline_preinterp_cl[:, 1])
-    #     self.raceline = np.column_stack((x_interp_cl[:-1], y_interp_cl[:-1]))  # unclosed
-    #
-    #     mu_preinterp_cl = np.append(self.mu, self.mu[0])
-    #     self.mu = np.interp(dists_cl, dists_cl_preinterp, mu_preinterp_cl)[:-1]  # unclosed
-    #
-    # def __calc_curvature(self) -> None:
-    #     """Raceline is an array containing x and y coords: [x, y]. Output is in rad/m."""
-    #
-    #     # create temporary path including 3 points before and after original path for more accurate gradients
-    #     raceline_tmp = np.vstack((self.raceline[-3:, :], self.raceline, self.raceline[:3, :]))
-    #
-    #     # calculate curvature using np.gradient
-    #     dx = np.gradient(raceline_tmp[:, 0])
-    #     ddx = np.gradient(dx)
-    #     dy = np.gradient(raceline_tmp[:, 1])
-    #     ddy = np.gradient(dy)
-    #
-    #     num = dx * ddy - ddx * dy
-    #     denom = np.power(np.sqrt(np.power(dx, 2) + np.power(dy, 2)), 3)
-    #
-    #     kappa = num / denom
-    #
-    #     # remove temporary points
-    #     self.kappa = kappa[3:-3]
-    #
-    # def __smooth_curvature(self) -> None:
-    #     self.kappa = np.convolve(self.kappa, np.ones(self.pars_track["curv_filt_window"])
-    #                              / self.pars_track["curv_filt_window"], mode="same")
 
     def __prep_raceline(self) -> None:
         """This function prepares the inserted raceline in several steps: interpolation, distance calculation,
@@ -468,7 +409,7 @@ class Track(object):
         ax1.arrow(self.raceline[0, 0], self.raceline[0, 1],
                   self.raceline[10, 0] - self.raceline[0, 0],
                   self.raceline[10, 1] - self.raceline[0, 1],
-                  head_width=300.0, width=10.0, )
+                  head_width=40.0, width=10.0, )
 
         # plot dots at start/finish and at the sector boundaries
         ax1.plot(self.raceline[0, 0], self.raceline[0, 1], "k.", markersize=13.0)
@@ -501,8 +442,9 @@ class Track(object):
                                                                                  pt_handle=pt_handle,
                                                                                  txt_handle=txt_handle,
                                                                                  fig_handle=fig))
-
-        plt.show()
+        
+        plt.show(block=False)
+        plt.waitforbuttonpress()
 
     def __onpick(self, event, pt_handle, txt_handle, fig_handle):
         # get position of click event

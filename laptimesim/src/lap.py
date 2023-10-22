@@ -737,24 +737,32 @@ class Lap(object):
     # ------------------------------------------------------------------------------------------------------------------
 
     def plot_lat_acc(self):
-        a_y_tmp = np.power(self.vel_cl[:-1], 2) * self.trackobj.kappa
-        a_x_tmp = (self.vel_cl[1:] - self.vel_cl[:-1]) / (self.t_cl[1:]-self.t_cl[:-1]) # v = ds/dt -> a = dv/dt 
-        if self.pars_solver["series"] == "F1":
-            a_y_valid = 50.0
-        else:
-            a_y_valid = 12.0
+            """
+            Plots the lateral acceleration profile of the car on the track.
 
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        plt.plot(self.trackobj.dists_cl[:-1], a_y_tmp)
-        plt.plot(self.trackobj.dists_cl[:-1], a_x_tmp)
-        ax.axhline(y=-a_y_valid, color="k", linestyle="--", linewidth=3.0)  # valid lateral acceleration limit
-        ax.axhline(y=a_y_valid, color="k", linestyle="--", linewidth=3.0)  # valid lateral acceleration limit
-        ax.set_title("Lateral acceleration profile")
-        ax.set_xlabel("distance s in m")
-        ax.set_ylabel("lateral acceleration ay in m/s2")
-        plt.grid()
-        plt.show(block=False)
+            Returns:
+                None
+            """
+            a_lat_tmp = np.power(self.vel_cl[:-1], 2) * self.trackobj.kappa
+            a_long_tmp = (self.vel_cl[1:] - self.vel_cl[:-1]) / (self.t_cl[1:]-self.t_cl[:-1]) # v = ds/dt -> a = dv/dt 
+
+            if self.pars_solver["series"] == "F1":
+                a_y_valid = 50.0
+            else:
+                a_y_valid = 12.0
+
+            fig = plt.figure()
+            ax = fig.add_subplot(111)
+            plt.plot(self.trackobj.dists_cl[:-1], a_lat_tmp, label="Lateral acceleration")
+            plt.plot(self.trackobj.dists_cl[:-1], a_long_tmp, label="Longitudinal acceleration")
+            ax.axhline(y=-a_y_valid, color="k", linestyle="--", linewidth=3.0)  # valid lateral acceleration limit
+            ax.axhline(y=a_y_valid, color="k", linestyle="--", linewidth=3.0)  # valid lateral acceleration limit
+            ax.set_title("Lateral acceleration profile")
+            ax.set_xlabel("distance s in m")
+            ax.set_ylabel("lateral acceleration ay in m/s2")
+            ax.legend()
+            plt.grid()
+            plt.show(block=False)
 
 
 
@@ -993,7 +1001,8 @@ class Lap(object):
         plt.savefig(dir +"/../overview.png", dpi=300 )
         print(f"saved to {dir +'/../overview.png'}")
 
-        plt.show()
+        plt.show(block=False)
+        plt.waitforbuttonpress()
 
         # reset font size
         plt.rcParams["font.size"] = 10.0

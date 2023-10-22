@@ -5,26 +5,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 
-"""
-author:
-Alexander Heilmeier (based on the term thesis of Maximilian Geisslinger)
-
-date:
-22.10.2023
-
-.. description::
-The file contains the script to run the lap time simulation starting with the import of various parameters and ending
-with the visualization of the calculated data.
-
-.. hints:
-Input tracks must be unclosed, i.e. last point != first point!
-"""
-
-
-# ----------------------------------------------------------------------------------------------------------------------
-# MAIN FUNCTION --------------------------------------------------------------------------------------------------------
-# ----------------------------------------------------------------------------------------------------------------------
-
 def main(track_opts: dict,
          solver_opts: dict,
          driver_opts: dict,
@@ -34,10 +14,7 @@ def main(track_opts: dict,
     # get repo path
     repo_path = os.path.dirname(os.path.abspath(__file__))
 
-
-    # ------------------------------------------------------------------------------------------------------------------
     # INITIALIZATION ---------------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
 
     output_path = os.path.join(repo_path, "laptimesim", "output")
 
@@ -51,9 +28,7 @@ def main(track_opts: dict,
         output_path_veh_dyn_info = os.path.join(output_path, "veh_dyn_info")
         os.makedirs(output_path_veh_dyn_info, exist_ok=True)
 
-    # ------------------------------------------------------------------------------------------------------------------
     # CREATE TRACK INSTANCE --------------------------------------------------------------------------------------------
-    # ------------------------------------------------------------------------------------------------------------------
 
     parfilepath = os.path.join(repo_path, "laptimesim", "input", "tracks", "track_pars.ini")
 
@@ -200,7 +175,9 @@ def main(track_opts: dict,
                 lap.reset_lap()
 
                 print("SA: Finished solver run (%i)" % (i + 1))
-
+        elif sa_opts["sa_type"] == "coast":
+            pass
+        
         else:
             sa_t_lap = np.zeros((sa_opts["range_1"][2], sa_opts["range_2"][2]))
             # TODO: implementation of COG and aero variation missing
@@ -339,7 +316,7 @@ if __name__ == '__main__':
     track_opts_ = {"trackname": "Leipzig",
                    "flip_track": False,
                    "mu_weather": 1.0,
-                   "interp_stepsize_des": 3.0,
+                   "interp_stepsize_des": 5.0,
                    "curv_filt_width": 10.0,
                    "use_drs1": False,
                    "use_drs2": False,
@@ -380,16 +357,16 @@ if __name__ == '__main__':
     # lift_coast_dist:  [m] lift and coast before braking point
 
 driver_opts_ = {"vel_subtr_corner": 2.5/3.6,
-                "vel_lim_glob": 160.0 /3.6,
-                "yellow_s1": False,
-                "yellow_s2": False,
-                "yellow_s3": False,
-                "yellow_throttle": 0.5,
+                "vel_lim_glob": 150.0 /3.6,
+                "yellow_s1": True,
+                "yellow_s2": True,
+                "yellow_s3": True,
+                "yellow_throttle": 1.0,
                 "initial_energy": 0.0e6,
                 "em_strategy": "FCFB",
                 "use_recuperation": True,
-                "use_lift_coast": False,
-                "lift_coast_dist":10.0} # 200m ist je nach Kurve auch etwas viel
+                "use_lift_coast": True,
+                "lift_coast_dist":200.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -397,7 +374,7 @@ driver_opts_ = {"vel_subtr_corner": 2.5/3.6,
     # range_1:  range of parameter variation [start, end, number of steps]
     # range_2:  range of parameter variation [start, end, number of steps] -> CURRENTLY NOT IMPLEMENTED
 
-sa_opts_ = {"use_sa": False,
+sa_opts_ = {"use_sa": True,
             "sa_type": "mass",
             "range_1": [2380.0, 2460.0, 5],
             "range_2": None}
@@ -409,9 +386,9 @@ sa_opts_ = {"use_sa": False,
     # use_print:                set if prints to console should be used or not (does not suppress hints/warnings)
     # use_print_result:         set if result should be printed to console or not
 
-debug_opts_ = {"use_plot": True,
-                "use_debug_plots": False,
-                "use_track_plots": False,
+debug_opts_ = {"use_plot": False,
+                "use_debug_plots": True,
+                "use_track_plots": True,
                 "use_plot_comparison_tph": False,
                 "use_print": True,
                 "use_print_result": True}
@@ -437,3 +414,6 @@ main(track_opts=track_opts_,
          debug_opts=debug_opts_)
 
 print(f"Runtime: {time.time() - start_time:.2f} seconds")
+#wait for a key press to keep the plot open
+#input("Press any key to exit")
+# docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY -v $(pwd):/home/docker/data/s/ sim

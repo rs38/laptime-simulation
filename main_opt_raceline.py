@@ -314,7 +314,7 @@ if __name__ == '__main__':
 
     track_pars_ = {"location": "Leipzig",
                    "track_length": 3700.0,
-                   "track_width": 10}
+                   "track_width": 11.6}
 
     # track_pars_ = {"location": "Budapest",
     #                "track_length": 4381.0,
@@ -432,7 +432,7 @@ if __name__ == '__main__':
     imp_opts_ = {"mode": "centerline",
                  "flip_imp_track": False,
                  "set_new_start": True,
-                 "new_start": [0.0, 0.0],
+                 "new_start": [0.0, -300.0],
                  "plot_track": True}
 
     # spline regression smoothing options ------------------------------------------------------------------------------
@@ -440,7 +440,7 @@ if __name__ == '__main__':
     # s_reg:    [-] smoothing factor -> range [1.0, 100.0] (play a little bit)
 
     reg_smooth_opts_ = {"k_reg": 3,
-                        "s_reg": 40.0}
+                        "s_reg": 60.0}
 
     # set stepsizes used during optimization ---------------------------------------------------------------------------
     # stepsize_prep:                [m] used for linear interpolation before spline approximation
@@ -457,7 +457,7 @@ if __name__ == '__main__':
     # iqp_iters_min:            [-] minimum number of iterations for the IQP
     # iqp_curverror_allowed:    [rad/m] maximum allowed curvature error for the IQP
 
-    optim_opts_mincurv_ = {"width_opt": 1.5,
+    optim_opts_mincurv_ = {"width_opt": 1.9,
                            "curvlim": 0.12,
                            "iqp_iters_min": 3,
                            "iqp_curverror_allowed": 0.01}
