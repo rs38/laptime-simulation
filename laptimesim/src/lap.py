@@ -813,7 +813,7 @@ class Lap(object):
         # plt.legend(["front left", "front right", "rear left", "rear right", "total", "avg. static",
         #             "7 * avg. static"])
         plt.grid()
-        plt.show()
+        plt.show(block=False)
 
     def plot_aero_forces(self):
         c_z_a_f = self.driverobj.carobj.pars_general["c_z_a_f"]
@@ -827,7 +827,7 @@ class Lap(object):
         if self.pars_solver["series"] == "F1":
             f_z_aero_valid = 18e3
         else:
-            f_z_aero_valid = 6e3
+            f_z_aero_valid = 15e2
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -839,7 +839,7 @@ class Lap(object):
         ax.set_ylabel("amplitude in N")
         plt.legend(["drag", "downforce", "valid downforce range"])
         plt.grid()
-        plt.show()
+        plt.show(block=False)
 
     def plot_enginespeed_gears(self):
         fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1, sharex=True)
@@ -854,8 +854,7 @@ class Lap(object):
         ax2.set_xlabel("distance s in m")
         ax2.set_ylabel("gear in -")
         ax2.grid()
-
-        plt.show()
+        plt.show(block=False)
 
     def plot_overview(self):
         # set bigger font size
@@ -876,7 +875,7 @@ class Lap(object):
         plt.grid()
 
         # plot global title
-        title = "lap time: %.3f s" % self.t_cl[-1]
+        title = f"Lap Time: {self.t_cl[-1]:.2f} s, avg. speed: {3.6 * self.trackobj.dists_cl[-1]/ self.t_cl[-1]:.1f} km/h" # {np.mean(self.vel_cl) * 3.6:.1f} median
         plt.title(title)
 
         # --------------------------------------------------------------------------------------------------------------
@@ -991,8 +990,8 @@ class Lap(object):
         plt.text(0.5, -0.22, f"kWh/100km:{consump:.1f}", ha="center", transform=ax1.transAxes)
         #save to running directory
         dir = os.path.dirname(__file__)
-        plt.savefig(dir +"/../overview.png" )
-        print(f"saved to {dir}overview.png")
+        plt.savefig(dir +"/../overview.png", dpi=300 )
+        print(f"saved to {dir +'/../overview.png'}")
 
         plt.show()
 

@@ -140,3 +140,4 @@ docker/*
 !docker/run_docker.sh
 **/databases/*.sqlite
 **/saved_models/*
+laptimesim/overview.png

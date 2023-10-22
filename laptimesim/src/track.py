@@ -468,7 +468,7 @@ class Track(object):
         ax1.arrow(self.raceline[0, 0], self.raceline[0, 1],
                   self.raceline[10, 0] - self.raceline[0, 0],
                   self.raceline[10, 1] - self.raceline[0, 1],
-                  head_width=30.0, width=10.0)
+                  head_width=300.0, width=10.0, )
 
         # plot dots at start/finish and at the sector boundaries
         ax1.plot(self.raceline[0, 0], self.raceline[0, 1], "k.", markersize=13.0)
@@ -478,7 +478,7 @@ class Track(object):
                  self.raceline[self.zone_inds["s23"], 1], "k.", markersize=13.0)
 
         ax1.set_aspect("equal", "datalim")
-        ax1.set_title("track map: " + self.pars_track["trackname"])
+        ax1.set_title("track map : " + self.pars_track["trackname"])
         ax1.set_xlabel("x in m")
         ax1.set_ylabel("y in m")
 
