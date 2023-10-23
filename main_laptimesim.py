@@ -186,12 +186,14 @@ def main(track_opts: dict,
 
                 # change coasting
                 lap.driverobj.pars_driver["lift_coast_dist"]  = cur_coast
+                lap.reset_lap()
+                
 
                 lap.simulate_lap()
                 sa_t_lap[i] = lap.t_cl[-1]
                 sa_energy_cons_kWh[i] = lap.es_cl[-1] / -3600000.0
 
-                lap.reset_lap()
+                #lap.reset_lap()
 
                 print(f"SA: Finished solver run ({i + 1}) with coasting {cur_coast:.1f} m and lap time {sa_t_lap[i]:.1f} s and fuel consumption {sa_energy_cons_kWh[i]:.1f} kWh")
 
@@ -365,11 +367,11 @@ if __name__ == '__main__':
     # use_drs2:             DRS zone 2 switch
     # use_pit:              activate pit stop (requires _pit track file!)
 
-    track_opts_ = {"trackname": "Leipzig",
+    track_opts_ = {"trackname": "Hockenheim",
                    "flip_track": False,
                    "mu_weather": 1.0,
-                   "interp_stepsize_des": 5.0,
-                   "curv_filt_width": 10.0,
+                   "interp_stepsize_des": 3.0,
+                   "curv_filt_width": 6.0,
                    "use_drs1": False,
                    "use_drs2": False,
                    "use_pit": False}
@@ -389,7 +391,7 @@ if __name__ == '__main__':
                     "limit_braking_weak_side": 'RA',
                     "v_start": 150.0 / 3.6,
                     "find_v_start": True,
-                    "max_no_em_iters": 10,
+                    "max_no_em_iters": 20,
                     "es_diff_max": 1.0}
 
     # driver options ---------------------------------------------------------------------------------------------------
@@ -408,7 +410,7 @@ if __name__ == '__main__':
     # use_lift_coast:   switch to turn lift and coast on/off
     # lift_coast_dist:  [m] lift and coast before braking point
 
-driver_opts_ = {"vel_subtr_corner": 2.5/3.6,
+driver_opts_ = {"vel_subtr_corner": 5/3.6,
                 "vel_lim_glob": 150.0 /3.6,
                 "yellow_s1": True,
                 "yellow_s2": True,
@@ -418,7 +420,7 @@ driver_opts_ = {"vel_subtr_corner": 2.5/3.6,
                 "em_strategy": "FCFB",
                 "use_recuperation": True,
                 "use_lift_coast": True,
-                "lift_coast_dist":10.0} # 200m ist je nach Kurve auch etwas viel
+                "lift_coast_dist":20.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -426,7 +428,7 @@ driver_opts_ = {"vel_subtr_corner": 2.5/3.6,
     # range_1:  range of parameter variation [start, end, number of steps]
     # range_2:  range of parameter variation [start, end, number of steps] -> CURRENTLY NOT IMPLEMENTED
 
-sa_opts_ = {"use_sa": True,
+sa_opts_ = {"use_sa": False,
             "sa_type": "coast", 
             "range_1":[10.0, 250.0, 15],
             "range_2": None}
