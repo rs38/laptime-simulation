@@ -17,6 +17,7 @@ class Driver(object):
     The file provides functions related to the energy management strategy. Therefore, it determines when the hybrid
     system is used during a lap.
     """
+   
 
     # ------------------------------------------------------------------------------------------------------------------
     # SLOTS ------------------------------------------------------------------------------------------------------------
@@ -36,6 +37,7 @@ class Driver(object):
                  stepsize: float = 5.0):
         """stepsize must only be supplied for lift and coast strategy."""
 
+      
         # save car object and parameters
         self.carobj = carobj
         self.pars_driver = pars_driver
@@ -109,6 +111,13 @@ class Driver(object):
             raise IOError("Unknown energy management strategy!")
 
         self.throttle_pos = np.ones(trackobj.no_points)
+        
+        
+        if self.pars_driver["use_lift_coast"]:
+            self.no_points_lac = max(int(round(self.pars_driver["lift_coast_dist"] / trackobj.stepsize)), 1)
+        else:
+            self.no_points_lac = 0
+
 
         if any((self.pars_driver["yellow_s1"], self.pars_driver["yellow_s2"], self.pars_driver["yellow_s3"])):
             self.__set_yellow_throttle(trackobj=trackobj)

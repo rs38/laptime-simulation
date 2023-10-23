@@ -158,7 +158,7 @@ def main(track_opts: dict,
         # perform analysis
         if sa_opts["sa_type"] == "mass":
             sa_t_lap = np.zeros(sa_opts["range_1"][2])
-            sa_fuel_cons = np.zeros(sa_opts["range_1"][2])
+            sa_energy_cons_kWh = np.zeros(sa_opts["range_1"][2])
 
             for i, cur_mass in enumerate(sa_range_1):
                 print("SA: Starting solver run (%i)" % (i + 1))
@@ -169,15 +169,32 @@ def main(track_opts: dict,
                 # simulate lap and save lap time
                 lap.simulate_lap()
                 sa_t_lap[i] = lap.t_cl[-1]
-                sa_fuel_cons[i] = lap.es_cl[-1]
+                sa_energy_cons_kWh[i] = lap.es_cl[-1]
 
                 # reset lap
                 lap.reset_lap()
 
                 print("SA: Finished solver run (%i)" % (i + 1))
+        # new----------------------------------------------------------
+
         elif sa_opts["sa_type"] == "coast":
-            pass
-        
+            sa_t_lap = np.zeros(sa_opts["range_1"][2])
+            sa_energy_cons_kWh = np.zeros(sa_opts["range_1"][2])
+
+            for i, cur_coast in enumerate(sa_range_1):
+                print("SA: Starting solver run (%i)" % (i + 1))
+
+                # change coasting
+                lap.driverobj.pars_driver["lift_coast_dist"]  = cur_coast
+
+                lap.simulate_lap()
+                sa_t_lap[i] = lap.t_cl[-1]
+                sa_energy_cons_kWh[i] = lap.es_cl[-1] / -3600000.0
+
+                lap.reset_lap()
+
+                print(f"SA: Finished solver run ({i + 1}) with coasting {cur_coast:.1f} m and lap time {sa_t_lap[i]:.1f} s and fuel consumption {sa_energy_cons_kWh[i]:.1f} kWh")
+
         else:
             sa_t_lap = np.zeros((sa_opts["range_1"][2], sa_opts["range_2"][2]))
             # TODO: implementation of COG and aero variation missing
@@ -221,12 +238,19 @@ def main(track_opts: dict,
         if sa_opts["sa_type"] == "mass":
             m_diff = sa_range_1[-1] - sa_range_1[0]
             t_lap_diff = sa_t_lap[-1] - sa_t_lap[0]
-            fuel_cons_diff = sa_fuel_cons[-1] - sa_fuel_cons[0]
+            fuel_cons_diff = sa_energy_cons_kWh[-1] - sa_energy_cons_kWh[0]
 
             print("Average sensitivity of lap time to mass: %.3f s/kg" % (t_lap_diff / m_diff))
-            print("Average sensitivity of fuel consumption to mass: %.5f kWh/kg" % (fuel_cons_diff /( m_diff * -3600000)))   
+            print("Average sensitivity of fuel consumption to mass: %.5f kWh/kg" % (fuel_cons_diff /( m_diff )))   
             print("-" * 50)
+        elif sa_opts["sa_type"] == "coast":
+            coast_diff = sa_range_1[-1] - sa_range_1[0]
+            t_lap_diff = sa_t_lap[-1] - sa_t_lap[0]
+            fuel_cons_diff = sa_energy_cons_kWh[-1] - sa_energy_cons_kWh[0]
 
+            print("Average sensitivity of lap time to coast dist: %.3f s/m" % (t_lap_diff / coast_diff))
+            print("Average sensitivity of fuel consumption to coast dist: %.5f kWh/m" % (fuel_cons_diff /( coast_diff )))   
+            print("-" * 50)
         else:
             pass
             # TODO: implementation of COG and aero variation missing
@@ -260,19 +284,47 @@ def main(track_opts: dict,
             ax.set_xlabel("mass m in kg")
             ax.set_ylabel("lap time t in s")
             plt.grid()
-            plt.show()
+            plt.show(block=False)
 
             # fuel consumption
             fig = plt.figure()
             ax = fig.add_subplot(111)
-            ax.plot(sa_range_1, sa_fuel_cons, "x")
+            ax.plot(sa_range_1, sa_energy_cons_kWh, "x")
             ax.set_xlim(sa_range_1[0], sa_range_1[-1])
-            ax.set_ylim(sa_fuel_cons[0], sa_fuel_cons[-1])
+            ax.set_ylim(sa_energy_cons_kWh[0], sa_energy_cons_kWh[-1])
             ax.set_title("SA of fuel consumption to mass")
             ax.set_xlabel("mass m in kg")
-            ax.set_ylabel("fuel consumption in kg/lap")
+            ax.set_ylabel("fuel consumption in KWh/lap")
             plt.grid()
             plt.show()
+            
+        if sa_opts["sa_type"] == "coast":
+            # same as above but for coasting
+            
+            fig = plt.figure()
+
+            # First subplot for lap time
+            ax1 = fig.add_subplot(211)
+            ax1.plot(sa_range_1, sa_t_lap, "x")
+            ax1.set_xlim(sa_range_1[0], sa_range_1[-1])
+            ax1.set_ylim(sa_t_lap[0], sa_t_lap[-1])
+            ax1.set_title("SA of lap time to coast dist")
+            ax1.set_xlabel("coast in m")
+            ax1.set_ylabel("lap time t in s")
+            ax1.grid()
+
+            # Second subplot for fuel consumption
+            ax2 = fig.add_subplot(212)
+            ax2.plot(sa_range_1, sa_energy_cons_kWh, "x")
+            ax2.set_xlim(sa_range_1[0], sa_range_1[-1])
+            ax2.set_ylim(sa_energy_cons_kWh[0], sa_energy_cons_kWh[-1])
+            ax2.set_title("SA of fuel consumption to coast m")
+            ax2.set_xlabel("coast in m ")
+            ax2.set_ylabel("fuel consumption in kWh/lap")
+            ax2.grid()
+
+            plt.show()
+
 
     # ------------------------------------------------------------------------------------------------------------------
     # CI TESTING -------------------------------------------------------------------------------------------------------
@@ -366,7 +418,7 @@ driver_opts_ = {"vel_subtr_corner": 2.5/3.6,
                 "em_strategy": "FCFB",
                 "use_recuperation": True,
                 "use_lift_coast": True,
-                "lift_coast_dist":200.0} # 200m ist je nach Kurve auch etwas viel
+                "lift_coast_dist":10.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -375,8 +427,8 @@ driver_opts_ = {"vel_subtr_corner": 2.5/3.6,
     # range_2:  range of parameter variation [start, end, number of steps] -> CURRENTLY NOT IMPLEMENTED
 
 sa_opts_ = {"use_sa": True,
-            "sa_type": "mass",
-            "range_1": [2380.0, 2460.0, 5],
+            "sa_type": "coast", 
+            "range_1":[10.0, 250.0, 15],
             "range_2": None}
 
     # debug options ----------------------------------------------------------------------------------------------------
@@ -386,7 +438,7 @@ sa_opts_ = {"use_sa": True,
     # use_print:                set if prints to console should be used or not (does not suppress hints/warnings)
     # use_print_result:         set if result should be printed to console or not
 
-debug_opts_ = {"use_plot": False,
+debug_opts_ = {"use_plot": True,
                 "use_debug_plots": True,
                 "use_track_plots": True,
                 "use_plot_comparison_tph": False,

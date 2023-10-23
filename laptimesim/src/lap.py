@@ -866,7 +866,7 @@ class Lap(object):
 
     def plot_overview(self):
         # set bigger font size
-        plt.rcParams["font.size"] = 16.0
+        plt.rcParams["font.size"] = 10.0
 
         # create figure
         plt.figure(1, figsize=(12.0, 9.0))
