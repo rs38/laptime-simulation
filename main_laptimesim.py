@@ -367,7 +367,7 @@ if __name__ == '__main__':
     # use_drs2:             DRS zone 2 switch
     # use_pit:              activate pit stop (requires _pit track file!)
 
-    track_opts_ = {"trackname": "Hockenheim",
+    track_opts_ = {"trackname": "Leipzig",
                    "flip_track": False,
                    "mu_weather": 1.0,
                    "interp_stepsize_des": 3.0,
@@ -388,10 +388,10 @@ if __name__ == '__main__':
 
     solver_opts_ = {"vehicle": "BEV_Taycan.ini",
                     "series": "FE",
-                    "limit_braking_weak_side": 'RA',
-                    "v_start": 150.0 / 3.6,
+                    "limit_braking_weak_side": 'all',
+                    "v_start": 50.0 / 3.6,
                     "find_v_start": True,
-                    "max_no_em_iters": 20,
+                    "max_no_em_iters": 10,
                     "es_diff_max": 1.0}
 
     # driver options ---------------------------------------------------------------------------------------------------
@@ -420,7 +420,7 @@ driver_opts_ = {"vel_subtr_corner": 5/3.6,
                 "em_strategy": "FCFB",
                 "use_recuperation": True,
                 "use_lift_coast": True,
-                "lift_coast_dist":20.0} # 200m ist je nach Kurve auch etwas viel
+                "lift_coast_dist":120.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis
@@ -442,8 +442,8 @@ sa_opts_ = {"use_sa": False,
 
 debug_opts_ = {"use_plot": True,
                 "use_debug_plots": True,
-                "use_track_plots": True,
-                "use_plot_comparison_tph": False,
+                "use_track_plots": False,
+                "use_plot_comparison_tph": True,
                 "use_print": True,
                 "use_print_result": True}
 

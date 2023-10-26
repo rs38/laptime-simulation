@@ -802,7 +802,7 @@ class Lap(object):
             f_z_dyn_valid = f_z_stat_avg * 5.0
             legend_text = "5 * avg. static"
         else:
-            f_z_dyn_valid = f_z_stat_avg * 3.0
+            f_z_dyn_valid = f_z_stat_avg * 2.0
             legend_text = "3 * avg. static"
 
         fig = plt.figure()
@@ -811,6 +811,7 @@ class Lap(object):
         plt.plot(self.trackobj.dists_cl[:-1], self.tire_loads[:, 1])
         plt.plot(self.trackobj.dists_cl[:-1], self.tire_loads[:, 2])
         plt.plot(self.trackobj.dists_cl[:-1], self.tire_loads[:, 3])
+        print(self.tire_loads[:, 0].mean,self.tire_loads[:,1].mean,self.tire_loads[:, 2].mean, self.tire_loads[:, 3].mean)
         # plt.plot(self.trackobj.dists_cl[:-1], np.sum(self.tire_loads, axis=1))
         ax.axhline(y=f_z_stat_avg, color="k", linestyle="--", linewidth=3.0)   # valid tire load range
         ax.axhline(y=f_z_dyn_valid, color="k", linestyle="--", linewidth=3.0)  # valid tire load range
