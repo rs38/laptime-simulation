@@ -389,7 +389,7 @@ if __name__ == '__main__':
     solver_opts_ = {"vehicle": "BEV_Taycan.ini",
                     "series": "FE",
                     "limit_braking_weak_side": 'all',
-                    "v_start": 50.0 / 3.6,
+                    "v_start": 150.0 / 3.6,
                     "find_v_start": True,
                     "max_no_em_iters": 10,
                     "es_diff_max": 1.0}
@@ -420,7 +420,7 @@ driver_opts_ = {"vel_subtr_corner": 5/3.6,
                 "em_strategy": "FCFB",
                 "use_recuperation": True,
                 "use_lift_coast": True,
-                "lift_coast_dist":120.0} # 200m ist je nach Kurve auch etwas viel
+                "lift_coast_dist":100.0} # 200m ist je nach Kurve auch etwas viel
 
     # sensitivity analysis options -------------------------------------------------------------------------------------
     # use_sa:   switch to deactivate sensitivity analysis

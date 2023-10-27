@@ -403,7 +403,7 @@ class Lap(object):
                                                             f_y_r=f_y_r)
 
                 # approximate current a_x for tire load calc. either based on previous iteration or based on a_x_max
-                if a_x > 0.0:
+                if a_x >= 0.0:
                     a_x = min(a_x, a_x_max)
                 else:  # a_x not usable if previous point was in deceleration phase
                     a_x = a_x_max
@@ -811,7 +811,7 @@ class Lap(object):
         plt.plot(self.trackobj.dists_cl[:-1], self.tire_loads[:, 1])
         plt.plot(self.trackobj.dists_cl[:-1], self.tire_loads[:, 2])
         plt.plot(self.trackobj.dists_cl[:-1], self.tire_loads[:, 3])
-        print(self.tire_loads[:, 0].mean,self.tire_loads[:,1].mean,self.tire_loads[:, 2].mean, self.tire_loads[:, 3].mean)
+        [print(np.mean(self.tire_loads[:, f])) for f in range(4)]
         # plt.plot(self.trackobj.dists_cl[:-1], np.sum(self.tire_loads, axis=1))
         ax.axhline(y=f_z_stat_avg, color="k", linestyle="--", linewidth=3.0)   # valid tire load range
         ax.axhline(y=f_z_dyn_valid, color="k", linestyle="--", linewidth=3.0)  # valid tire load range
@@ -820,7 +820,7 @@ class Lap(object):
         ax.set_ylabel("tire load F_z in N")
         plt.legend(["front left", "front right", "rear left", "rear right", "avg. static", legend_text])
         # plt.legend(["front left", "front right", "rear left", "rear right", "total", "avg. static",
-        #             "7 * avg. static"])
+        #             "7 * avg. static"])py
         plt.grid()
         plt.show(block=False)
 

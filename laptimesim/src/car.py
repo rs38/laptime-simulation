@@ -414,7 +414,7 @@ class Car(object):
 
         # user input
         no_steps = 101
-        a_x_max = 25.0  # [m/s^2]
+        a_x_max = 10.0  # [m/s^2]
 
         # create a_x array
         a_x_range = np.linspace(0.0, a_x_max, no_steps)
